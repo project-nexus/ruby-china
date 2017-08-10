@@ -1,5 +1,6 @@
 node_modules/
 .idea/
+.vscode/
 
 logs
 project/project
@@ -29,3 +30,4 @@ app/assets/javascripts/node_modules
 spa/node_modules
 spa/.idea
 npm-debug.log
+public/manifest.json

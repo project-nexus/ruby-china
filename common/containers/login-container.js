@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import Login from '../components/login-container/login';
 import { getTopics } from '../actions/topic';
 
-export default class LoginContainer extends Component {
+class LoginContainer extends Component {
 
   componentDidMount() {
     const { dispatch } = this.props;
