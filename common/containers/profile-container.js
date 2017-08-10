@@ -8,6 +8,7 @@ import ProfileReplyList from '../components/profile-container/profile-reply-list
 import ProfileUserList from '../components/profile-container/profile-user-list';
 import Spinner from '../components/shared/spinner';
 import { getToken } from '../lib/util';
+import { authenticatedAction } from '../lib/util';
 import { detectScrollEnd } from '../lib/scroll';
 import {
   getUserProfileAndTopics,
@@ -46,13 +47,15 @@ class ProfileContainer extends Component {
 
     window.scrollTo(0, 0);
     this.setState({ isLoading: true });
-    dispatch(getUserProfileAndTopics(username))
+    authenticatedAction(dispatch, () => {
+      dispatch(getUserProfileAndTopics(username))
       .then( () => {
         this.setState({ isLoading: false });
       })
       .catch( e => {
         this.setState({ isLoading: false });
       });
+    });
   }
 
   componentDidUpdate(prevProps) {
