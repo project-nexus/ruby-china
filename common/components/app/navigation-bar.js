@@ -12,8 +12,8 @@ export default class NavigationBar extends React.Component {
     }
 
     return (
-      <Link to={path}>
-        <div className={classNames}>
+      <Link className={classNames} to={path}>
+        <div>
               <span>
                 <i className={icon} />
                 { text }
@@ -30,6 +30,7 @@ export default class NavigationBar extends React.Component {
         { this.renderSubNav.bind(this)("/", "fa fa-comments", "社区") }
         { this.renderSubNav.bind(this)("/notifications", "fa fa-bell", "通知") }
         { this.renderSubNav.bind(this)("/me", "fa fa-user", "我") }
+        <div className={styles.underline}></div>
       </div>
     );
   }
