@@ -95,13 +95,10 @@ export function authenticatedAction(dispatch, action) {
   if (!isValidLoginOrRedirect()) {
     dispatch(refreshAccessToken())
       .then( result => {
-        if (result.error) {
-          browserHistory.push(`/login?next=${window.location.pathname}`)
-        } else {
+        if (!result.error) {
           action();
         }
       })
-      .catch( e => browserHistory.push(`/login?next=${window.location.pathname}`));
   } else {
     action();
   }
