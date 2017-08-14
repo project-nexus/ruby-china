@@ -55,6 +55,7 @@ export function fetchAccessToken(username, password) {
         if (data && data.error) {
           return { error: data["error_description"] };
         } else {
+          debugger
           saveToken(data, username);
           let params = getQueryParams(window.location.search);
           browserHistory.push(params.next);

@@ -44,8 +44,8 @@ const address = {
     return addressFactory('notifications.json', {offset: offset, limit: limit});
   },
 
-  user: (username) => {
-    return addressFactory(`users/${username}.json`);
+  user: () => {
+    return addressFactory('users/me.json');
   },
 
   userTopics: (username, offset = 0, limit = 20) => {
