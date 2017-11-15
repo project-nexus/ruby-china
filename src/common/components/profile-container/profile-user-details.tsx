@@ -1,18 +1,17 @@
-import React, {
-  Component
-} from 'react';
-import PropTypes from 'prop-types'; // ES6
-
-
+import * as React from 'react';
+import * as PropTypes from 'prop-types'; 
 import UserAvatar from '../shared/user-avatar';
 import { followUser, unfollowUser } from '../../actions/user';
 import { authenticatedAction } from '../../lib/util';
-import styles from './profile-user-details.css';
+import './profile-user-details.css';
 
-export default class ProfileUserDetails extends Component {
+export default class ProfileUserDetails extends React.Component<any, any> {
 
-  handleClick(user) {
+  static propTypes = {
+    user: PropTypes.object.isRequired
+  }
 
+  handleClick(user: any) {
     const { dispatch } = this.props;
 
     if (user.meta.followed) {
@@ -64,21 +63,21 @@ export default class ProfileUserDetails extends Component {
     }
 
     return (
-      <div className={styles.profileUserDetailsContainer}>
+      <div className="profileUserDetailsContainer">
           <UserAvatar
             size={56}
             radius={6}
             src={user.avatar_url}
             username={user.login}
           />
-          <div className={styles.profileInfo}>
+          <div className="profileInfo">
 
-            <div className={styles.profileUserDetailsItem}>
-              <div className={styles.profileFullname}>{`${user.name || user.login}`}</div>
+            <div className="profileUserDetailsItem">
+              <div className="profileFullname">{`${user.name || user.login}`}</div>
               {
                 location.pathname !== '/me' ?
                 (
-                  <button className={styles.profileFollowButton}
+                  <button className="profileFollowButton"
                           onClick={this.handleClick.bind(this, user)}>
                     {followingText}
                   </button>
@@ -87,7 +86,7 @@ export default class ProfileUserDetails extends Component {
               }
             </div>
 
-            <div className={styles.profileUsername}>{`${user.login}`}</div>
+            <div className="profileUsername">{`${user.login}`}</div>
             <div>{userCompanyLocation}</div>
             <div>{joinTime}</div>
           </div>
@@ -96,6 +95,3 @@ export default class ProfileUserDetails extends Component {
   }
 }
 
-ProfileUserDetails.propTypes = {
-  user: PropTypes.object.isRequired
-};

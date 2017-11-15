@@ -1,17 +1,17 @@
-import React, {
-  Component
-} from 'react';
-import PropTypes from 'prop-types'; // ES6
-
-
-import { Link } from 'react-router';
+import * as React from 'react';
+import * as PropTypes from 'prop-types'; 
+import { Link } from 'react-router-dom';
 import SpinnerCircle from '../shared/spinner-circle';
-import styles from './profile-list.css';
+import './profile-list.css';
 
-export default class ProfileReplyList extends Component {
+export default class ProfileReplyList extends React.Component<any, any> {
 
-  constructor(props) {
+  static propTypes = {
+    user: PropTypes.object.isRequired,
+    entities: PropTypes.object.isRequired
+  }
 
+  constructor(props: any) {
     super(props);
     this.renderReplyList = this.renderReplyList.bind(this);
     this.renderSpinner = this.renderSpinner.bind(this);
@@ -25,25 +25,23 @@ export default class ProfileReplyList extends Component {
       return <div>没有回复</div>;
     }
 
-    return replies.map( replyId => {
+    return replies.map((replyId: any) => {
       const reply = entities.replies[replyId];
 
       return (
-        <div key={`ProfileReplyList-${replyId}`} className={styles.profileListItemContainer}>
-
+        <div key={`ProfileReplyList-${replyId}`} className="profileListItemContainer">
           <Link to={`/topics/${reply.topic_id}`}>
-            <div className={styles.profileListItemTitle}>
+            <div className="profileListItemTitle">
               {reply.topic_title}
               </div>
           </Link>
-
           <div dangerouslySetInnerHTML={{__html: reply.body_html}}></div>
         </div>
       )
     })
   }
 
-  renderSpinner() {
+  renderSpinner(): any {
 
     if (this.props.isLoadingMore) {
       return <SpinnerCircle width={30} color={"rgb(102, 117, 127)"} />
@@ -53,15 +51,10 @@ export default class ProfileReplyList extends Component {
 
   render() {
     return (
-      <div className={styles.profileListContainer}>
+      <div className="profileListContainer">
         { this.renderReplyList() }
         { this.renderSpinner() }
       </div>
     );
   }
 }
-
-ProfileReplyList.propTypes = {
-  user: PropTypes.object.isRequired,
-  entities: PropTypes.object.isRequired
-};

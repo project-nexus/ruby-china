@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import './spinner.css';
 
-export default class Spinner extends React.Component {
+export default class Spinner extends React.Component<any, any> {
   render() {
     return (
       <div className="spinnerContainer">

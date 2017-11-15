@@ -1,5 +1,5 @@
 import 'isomorphic-fetch';
-import { browserHistory } from 'react-router';
+// import { browserHistory } from 'react-router';
 import * as types from '../constants/action-types';
 import address from '../lib/address';
 import { saveToken, getQueryParams } from '../lib/util';
@@ -57,7 +57,7 @@ export function fetchAccessToken(username, password) {
         } else {
           saveToken(data, username);
           let params = getQueryParams(window.location.search);
-          browserHistory.push(params.next);
+          // browserHistory.push(params.next);
         }
       })
       .catch(e => {

@@ -1,15 +1,14 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import UserAvatar from '../shared/user-avatar';
 import TopicActionBar from '../shared/topic-action-bar';
 import TopicDetailHeader from './topic-detail-header';
 import Spinner from '../shared/spinner';
-import styles from './topic-detail.css';
+import './topic-detail.css';
 
 
-export default class TopicDetail extends Component {
+export default class TopicDetail extends React.Component<any, any> {
 
-  constructor(props) {
-
+  constructor(props: any) {
     super(props);
   }
 
@@ -29,7 +28,7 @@ export default class TopicDetail extends Component {
 
     if (this.props.isLoadingPartial) {
       return (
-        <div className={styles.topicDetail}>
+        <div className="topicDetail">
           <TopicDetailHeader topic={topic} user={user} />
           <Spinner />
         </div>
@@ -38,15 +37,12 @@ export default class TopicDetail extends Component {
 
     const topicBodyHtml = {__html: topic.body_html};
     return (
-      <div className={styles.topicDetail}>
-
+      <div className="topicDetail">
         <TopicDetailHeader topic={topic} user={user} />
-
-        <div className={styles.topicDetailBody}>
+        <div className="topicDetailBody">
           <div dangerouslySetInnerHTML={topicBodyHtml} ></div>
         </div>
-
-        <div className={styles.topicDetailActionBar}>
+        <div className="topicDetailActionBar">
           <TopicActionBar topic={topic} dispatch={dispatch} interactive={true} />
         </div>
       </div>

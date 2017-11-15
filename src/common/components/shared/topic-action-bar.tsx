@@ -1,7 +1,5 @@
-import React, {
-  Component
-} from 'react';
-import PropTypes from 'prop-types'; // ES6
+import * as React from 'react';
+import * as PropTypes from 'prop-types'; // ES6
 
 import {
   likeTopic,
@@ -11,18 +9,23 @@ import {
 } from '../../actions/topic';
 
 import { authenticatedAction } from '../../lib/util';
-import styles from "./topic-action-bar.css";
+import "./topic-action-bar.css";
 
-export default class TopicActionBar extends Component {
+export default class TopicActionBar extends React.Component<any, any> {
 
-  constructor(props) {
+  static propTypes = {
+    topic: PropTypes.object.isRequired,
+    dispatch: PropTypes.func.isRequired,
+    interactive: PropTypes.bool
+  }
 
+  constructor(props: any) {
     super(props);
     this.clickLike = this.clickLike.bind(this);
     this.clickFollow = this.clickFollow.bind(this);
   }
 
-  clickLike(e) {
+  clickLike(e: any) {
 
     if (this.props.interactive) {
       e.preventDefault();
@@ -40,7 +43,7 @@ export default class TopicActionBar extends Component {
     }
   }
 
-  clickFollow(e) {
+  clickFollow(e: any) {
 
     if (this.props.interactive) {
       e.preventDefault();
@@ -63,7 +66,7 @@ export default class TopicActionBar extends Component {
     const { topic, interactive } = this.props;
 
     return (
-      <div className={styles.topicActionContainer}>
+      <div className="topicActionContainer">
 
         <div>
           <i className="fa fa-reply"/>
@@ -82,9 +85,3 @@ export default class TopicActionBar extends Component {
     );
   }
 }
-
-TopicActionBar.propTypes = {
-  topic: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired,
-  interactive: PropTypes.bool
-};

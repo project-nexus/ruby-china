@@ -1,7 +1,7 @@
-import React, {Component} from 'react';
+import * as React from 'react';
 import ReplyListItem from './reply-list-item';
 
-export default class ReplyList extends Component {
+export default class ReplyList extends React.Component<any, any> {
 
   renderReplyItems() {
     const { reply, entities } = this.props;
@@ -10,7 +10,7 @@ export default class ReplyList extends Component {
       return;
     }
 
-    return reply.items.map((replyId, i) => {
+    return reply.items.map((replyId: any, i: any) => {
 
       const reply = entities.replies[replyId];
       const user = entities.users[reply.user];
