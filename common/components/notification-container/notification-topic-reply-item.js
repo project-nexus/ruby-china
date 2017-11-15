@@ -1,8 +1,7 @@
 import React, {
-  Component,
-  PropTypes
+  Component
 } from 'react';
-
+import PropTypes from 'prop-types'; // ES6
 import { Link } from 'react-router';
 import UserAvatar from '../shared/user-avatar';
 import styles from './notification-topic-reply-item.css';

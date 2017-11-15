@@ -1,7 +1,8 @@
 import React, {
-  Component,
-  PropTypes
+  Component
 } from 'react';
+import PropTypes from 'prop-types'; // ES6
+
 import styles from './spinner-circle.css';
 
 export default class SpinnerCircle extends React.Component {

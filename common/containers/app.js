@@ -1,9 +1,9 @@
 'use strict';
 
 import React, {
-  Component,
-  PropTypes
+  Component
 } from 'react';
+import PropTypes from 'prop-types'; // ES6
 import { connect } from 'react-redux';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';

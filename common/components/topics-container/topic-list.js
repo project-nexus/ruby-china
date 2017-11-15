@@ -1,7 +1,7 @@
 import React, {
-  Component,
-  PropTypes
+  Component
 } from 'react';
+import PropTypes from 'prop-types'; // ES6
 
 import TopicListItem from './topic-list-item';
 import SpinnerCircle from '../shared/spinner-circle';

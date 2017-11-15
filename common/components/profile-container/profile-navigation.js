@@ -1,7 +1,7 @@
 import React, {
-  Component,
-  PropTypes
+  Component
 } from 'react';
+import PropTypes from 'prop-types'; // ES6
 
 import styles from './profile-navigation.css';
 

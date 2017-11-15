@@ -1,7 +1,8 @@
 import React, {
-  Component,
-  PropTypes
+  Component
 } from 'react';
+import PropTypes from 'prop-types'; // ES6
+
 
 import UserAvatar from '../shared/user-avatar';
 import { followUser, unfollowUser } from '../../actions/user';

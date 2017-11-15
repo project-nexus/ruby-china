@@ -1,8 +1,8 @@
-import { Schema, arrayOf } from 'normalizr';
+import { schema } from 'normalizr';
 
-const topic = new Schema('topics');
+const topic = new schema.Entity('topics');
 
-const user = new Schema('users', {
+const user = new schema.Entity('users', {
   idAttribute: 'login',
   assignEntity: (output, key, value) => {
     if (key === 'avatar_url') {
@@ -16,9 +16,9 @@ const user = new Schema('users', {
   }
 });
 
-const reply = new Schema('replies');
+const reply = new schema.Entity('replies');
 
-const notification = new Schema('notifications');
+const notification = new schema.Entity('notifications');
 
 topic.define({
   user: user
@@ -35,10 +35,10 @@ notification.define({
 });
 
 user.define({
-  topics: arrayOf(topic),
-  replies: arrayOf(reply),
-  followers: arrayOf(user),
-  following: arrayOf(user)
+  topics: [ topic ],
+  replies: [ reply ],
+  followers: [ user ],
+  following: [ user ]
 });
 
 export const topicSchema = topic;
