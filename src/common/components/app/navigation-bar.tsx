@@ -7,9 +7,9 @@ export default class NavigationBar extends React.Component<any, any> {
   renderSubNav(path: any, icon: any, text: any) {
     let classNames = "tabItemContainer";
 
-    if (this.props.location.pathname === path) {
-      classNames = `${classNames} selected`
-    }
+    // if (this.props.location.pathname === path) {
+    //   classNames = `${classNames} selected`
+    // }
 
     return (
       <Link to={path}>

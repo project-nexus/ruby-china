@@ -6,7 +6,7 @@ import createStore from './common/store';
 import routes from './common/routes';
 
 const store = createStore();
-const rootElement = document.getElementById('app');
+const rootElement = document.getElementById('root');
 
 ReactDOM.render(
   <Provider store={store}>

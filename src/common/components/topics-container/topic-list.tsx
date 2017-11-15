@@ -1,15 +1,16 @@
-import React, {
-  Component
-} from 'react';
-import PropTypes from 'prop-types'; // ES6
-
+import * as React from 'react';
+import * as PropTypes from 'prop-types'; 
 import TopicListItem from './topic-list-item';
 import SpinnerCircle from '../shared/spinner-circle';
 
-export default class TopicList extends Component {
+export default class TopicList extends React.Component<any, any> {
 
-  constructor(props) {
+  static propTypes = {
+    entities: PropTypes.object.isRequired,
+    topic: PropTypes.object.isRequired
+  }
 
+  constructor(props: any) {
     super(props);
     this.renderTopicItems = this.renderTopicItems.bind(this);
   }
@@ -21,7 +22,7 @@ export default class TopicList extends Component {
       return;
     }
 
-    return topic.items.map((topicId, i) => {
+    return topic.items.map((topicId: any, i: any) => {
       const topic = entities.topics[topicId];
       const user = entities.users[topic.user];
 
@@ -41,11 +42,5 @@ export default class TopicList extends Component {
     );
   }
 }
-
-
-TopicList.propTypes = {
-  entities: PropTypes.object.isRequired,
-  topic: PropTypes.object.isRequired
-};
 
 
