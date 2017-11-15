@@ -1,6 +1,6 @@
 import 'isomorphic-fetch';
 import * as types from '../constants/action-types';
-import { normalize, arrayOf } from 'normalizr';
+import { normalize } from 'normalizr';
 
 import address from '../lib/address';
 import { topicSchema, replySchema } from '../constants/schema';
@@ -35,7 +35,7 @@ export function getTopics(offset, limit, type) {
       .then(res => res.json())
       .then(data => {
         const topics = data.topics;
-        const normalized = normalize(topics, arrayOf(topicSchema));
+        const normalized = normalize(topics, [topicSchema]);
         dispatch(receiveTopics(normalized.entities, normalized.result));
       })
       .catch((error) => { return {error: error.message} })
@@ -49,7 +49,7 @@ export function getTopicDetail(id) {
       .then( topicPayload => {
         if (topicPayload && topicPayload.topic) {
           topicPayload.topic.meta = topicPayload.meta;
-          const normalized = normalize([topicPayload.topic], arrayOf(topicSchema));
+          const normalized = normalize([topicPayload.topic], [topicSchema]);
           dispatch(receiveTopics(normalized.entities, normalized.result));
         }
       });
@@ -62,7 +62,7 @@ export function getTopicReplies(id, offset, limit) {
       .then(res => res.json())
       .then( replyPayload => {
         if (replyPayload && replyPayload.replies && replyPayload.replies.length > 0) {
-          const normalized = normalize(replyPayload.replies, arrayOf(replySchema));
+          const normalized = normalize(replyPayload.replies, [replySchema]);
           dispatch(receiveReplies(normalized.entities, normalized.result));
         }
       });
@@ -85,7 +85,7 @@ export function getMoreTopicReplies(id, offset, limit) {
       .then(res => res.json())
       .then( replyPayload => {
         if (replyPayload && replyPayload.replies && replyPayload.replies.length > 0) {
-          const normalized = normalize(replyPayload.replies, arrayOf(replySchema));
+          const normalized = normalize(replyPayload.replies, [replySchema]);
           dispatch(receiveMoreReplies(normalized.entities, normalized.result));
         }
       });
@@ -115,7 +115,7 @@ export function likeTopic(topic) {
         topic.meta.liked = true;
         topic['likes_count'] = data.count;
 
-        const normalized = normalize([topic], arrayOf(topicSchema));
+        const normalized = normalize([topic], [topicSchema]);
         dispatch(receiveTopics(normalized.entities, normalized.result));
       })
       .catch( e => { return { error: e.message }});
@@ -145,7 +145,7 @@ export function unlikeTopic(topic) {
         topic.meta.liked = false;
         topic['likes_count'] = data.count;
 
-        const normalized = normalize([topic], arrayOf(topicSchema));
+        const normalized = normalize([topic], [topicSchema]);
         dispatch(receiveTopics(normalized.entities, normalized.result));
       })
       .catch( e => { return { error: e.message }});
@@ -170,7 +170,7 @@ export function followTopic(topic) {
 
         topic.meta.followed = true;
 
-        const normalized = normalize([topic], arrayOf(topicSchema));
+        const normalized = normalize([topic], [topicSchema]);
         dispatch(receiveTopics(normalized.entities, normalized.result));
       })
       .catch( e => { return { error: e.messsage }});
@@ -195,7 +195,7 @@ export function unfollowTopic(topic) {
 
         topic.meta.followed = false;
 
-        const normalized = normalize([topic], arrayOf(topicSchema));
+        const normalized = normalize([topic], [topicSchema]);
         dispatch(receiveTopics(normalized.entities, normalized.result));
       })
       .catch( e => { return { error: e.messsage }});
@@ -215,7 +215,7 @@ export function postTopicReply(id, body) {
     })
       .then( res => res.json() )
       .then( replyPayload => {
-        const normalized = normalize([replyPayload.reply], arrayOf(replySchema));
+        const normalized = normalize([replyPayload.reply], [replySchema]);
         dispatch(receiveMoreReplies(normalized.entities, normalized.result));
       })
       .catch(e => console.log(e));

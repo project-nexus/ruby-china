@@ -24,7 +24,6 @@ export default class NavigationBar extends React.Component<any, any> {
   }
 
   render() {
-
     return (
       <div className="tabBar">
         { this.renderSubNav.bind(this)("/", "fa fa-comments", "社区") }

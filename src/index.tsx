@@ -3,14 +3,14 @@ import { Provider } from 'react-redux';
 import * as ReactDOM from 'react-dom';
 
 import createStore from './common/store';
-import routes from './common/routes';
+import App from './common/containers/app';
 
 const store = createStore();
 const rootElement = document.getElementById('root');
 
 ReactDOM.render(
   <Provider store={store}>
-    { routes() }
+    <App />
   </Provider>,
   rootElement
 );
