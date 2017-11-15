@@ -1,5 +1,0 @@
-{
-  "watch": ["webpack.config.babel.js", "server"],
-  "ignore": ["*.test.js"],
-  "verbose": true
-}
