@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 
 import TopicDetailWithReplies from '../components/topic-container/topic-detail-with-replies';
@@ -7,9 +7,15 @@ import { getTopicDetailWithReplies, getMoreTopicReplies } from '../actions/topic
 import { detectScrollEnd } from '../lib/scroll';
 import '../assets/stylesheets/highlight.css';
 
-class TopicContainer extends Component {
+class TopicContainer extends React.Component<any, any> {
 
-  constructor(props) {
+  static propTypes = {
+
+  }
+
+  static fetchData: any;
+
+  constructor(props: any) {
 
     super(props);
     this.loadMoreReplies = this.loadMoreReplies.bind(this);
@@ -76,12 +82,12 @@ class TopicContainer extends Component {
   }
 }
 
-TopicContainer.fetchData = (dispatch, params) => {
+TopicContainer.fetchData = (dispatch: any, params: any) => {
   const topicId = params.topicId;
   return dispatch(getTopicDetailWithReplies(topicId))
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state: any) {
 
   const { entities, topic, reply } = state;
   return {

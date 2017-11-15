@@ -1,14 +1,14 @@
-import React from 'react';
-import { Link } from 'react-router';
-import styles from './navigation-bar.css';
+import * as React from 'react';
+import { Link } from 'react-router-dom';
+import './navigation-bar.css';
 
-export default class NavigationBar extends React.Component {
+export default class NavigationBar extends React.Component<any, any> {
 
-  renderSubNav(path, icon, text) {
-    let classNames = styles.tabItemContainer;
+  renderSubNav(path: any, icon: any, text: any) {
+    let classNames = "tabItemContainer";
 
     if (this.props.location.pathname === path) {
-      classNames = `${styles.tabItemContainer} ${styles.selected}`;
+      classNames = `${classNames} selected`
     }
 
     return (
@@ -26,7 +26,7 @@ export default class NavigationBar extends React.Component {
   render() {
 
     return (
-      <div className={styles.tabBar}>
+      <div className="tabBar">
         { this.renderSubNav.bind(this)("/", "fa fa-comments", "社区") }
         { this.renderSubNav.bind(this)("/notifications", "fa fa-bell", "通知") }
         { this.renderSubNav.bind(this)("/me", "fa fa-user", "我") }

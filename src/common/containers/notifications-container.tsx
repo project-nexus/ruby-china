@@ -1,15 +1,15 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 
 import { authenticatedAction } from '../lib/util';
 import { detectScrollEnd } from '../lib/scroll';
 import { fetchNotifications } from '../actions/notification';
 import NotificationList from '../components/notification-container/notification-list';
-import Spinner from '../components/shared/spinner';
+import SpinnerCircle from '../components/shared/spinner-circle';
 
-class NotificationsContainer extends Component {
+class NotificationsContainer extends React.Component<any, any> {
 
-  constructor(props) {
+  constructor(props: any) {
 
     super(props);
     this.loadMoreNotifications = this.loadMoreNotifications.bind(this);
@@ -59,7 +59,7 @@ class NotificationsContainer extends Component {
 
   render() {
     if (this.state.isLoading) {
-      return <Spinner />;
+      return <SpinnerCircle />;
     }
 
     return (
@@ -71,7 +71,7 @@ class NotificationsContainer extends Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state: any) {
 
   const { entities, notification, user, topic, reply } = state;
   return {

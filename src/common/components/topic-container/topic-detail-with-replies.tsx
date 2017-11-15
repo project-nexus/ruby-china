@@ -1,17 +1,18 @@
-import React, {
-  Component
-} from 'react';
-import PropTypes from 'prop-types'; // ES6
+import * as React from 'react';
+import * as PropTypes from 'prop-types'; // ES6
 
 import TopicDetail from './topic-detail';
 import ReplyList from './reply-list';
 import ReplyActionBar from './reply-action-bar';
 import SpinnerCircle from '../shared/spinner-circle';
 
-export default class TopicDetailWithReplies extends Component {
+export default class TopicDetailWithReplies extends React.Component<any, any> {
 
-  constructor(props) {
+  static propTypes = {
+    isLoadingPartial: PropTypes.bool
+  }
 
+  constructor(props: any) {
     super(props);
     this.renderLoadingSpinner = this.renderLoadingSpinner.bind(this);
   }
@@ -33,7 +34,7 @@ export default class TopicDetailWithReplies extends Component {
     );
   }
 
-  renderLoadingSpinner() {
+  renderLoadingSpinner(): any {
     const { entities, reply, params } = this.props;
     const topic = entities.topics[params.topicId];
 
@@ -46,7 +47,3 @@ export default class TopicDetailWithReplies extends Component {
     }
   }
 }
-
-TopicDetailWithReplies.propTypes = {
-  isLoadingPartial: PropTypes.bool
-};

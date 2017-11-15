@@ -1,10 +1,14 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 
 import Login from '../components/login-container/login';
 import { getTopics } from '../actions/topic';
 
-class LoginContainer extends Component {
+class LoginContainer extends React.Component<any, any> {
+
+  static fetchData = (dispatch: any) => {
+    return dispatch(getTopics());
+  }
 
   componentDidMount() {
     const { dispatch } = this.props;
@@ -17,7 +21,7 @@ class LoginContainer extends Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state: any) {
 
   const { entities, application } = state;
   return {
@@ -25,10 +29,6 @@ function mapStateToProps(state) {
     application
   }
 }
-
-LoginContainer.fetchData = (dispatch) => {
-  return dispatch(getTopics());
-};
 
 export default connect(mapStateToProps)(LoginContainer);
 

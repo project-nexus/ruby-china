@@ -1,9 +1,7 @@
 'use strict';
 
-import React, {
-  Component
-} from 'react';
-import PropTypes from 'prop-types'; // ES6
+import * as React from 'react';
+import * as PropTypes from 'prop-types'; // ES6
 import { connect } from 'react-redux';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -12,9 +10,13 @@ import '../assets/stylesheets/global.css';
 
 injectTapEventPlugin();
 
-class App extends Component {
+class App extends React.Component<any, any> {
 
-  constructor(props) {
+  static propTypes = {
+    dispatch: PropTypes.func.isRequired
+  }
+
+  constructor(props: any) {
     super(props);
   }
 
@@ -29,9 +31,5 @@ class App extends Component {
     );
   }
 }
-
-App.propTypes = {
-  dispatch: PropTypes.func.isRequired
-};
 
 export default connect()(App);

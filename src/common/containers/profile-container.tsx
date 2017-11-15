@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 
 import ProfileUserDetails from '../components/profile-container/profile-user-details';
@@ -18,10 +18,9 @@ import {
   getUserFollowing
 } from '../actions/user';
 
-class ProfileContainer extends Component {
+class ProfileContainer extends React.Component<any, any> {
 
-  constructor(props) {
-
+  constructor(props: any) {
     super(props);
     this.renderProfileList = this.renderProfileList.bind(this);
     this.changeNavigationTab = this.changeNavigationTab.bind(this);
@@ -52,13 +51,13 @@ class ProfileContainer extends Component {
       .then( () => {
         this.setState({ isLoading: false });
       })
-      .catch( e => {
+      .catch( (e: any) => {
         this.setState({ isLoading: false });
       });
     });
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps: any) {
     const oldUsername = this.getUsername(prevProps);
     const username = this.getUsername();
 
@@ -89,7 +88,7 @@ class ProfileContainer extends Component {
     document.removeEventListener('touchMove', this.loadMoreContent);
   }
 
-  getUsername(prevProps) {
+  getUsername(prevProps?: any) {
 
     const props = prevProps ? prevProps : this.props;
 
@@ -104,7 +103,7 @@ class ProfileContainer extends Component {
     }
   }
 
-  changeNavigationTab(tab) {
+  changeNavigationTab(tab: any) {
 
     const { dispatch, params, entities } = this.props;
     const username = this.getUsername();
@@ -116,7 +115,7 @@ class ProfileContainer extends Component {
           this.setState({ isLoadingTab: true });
           dispatch(getUserTopics(params.username))
             .then( () => this.setState({ isLoadingTab: false }))
-            .catch( e => this.setState({ isLoadingTab: false }));
+            .catch( (e: any) => this.setState({ isLoadingTab: false }));
         }
         break;
       case 1:
@@ -124,7 +123,7 @@ class ProfileContainer extends Component {
           this.setState({ isLoadingTab: true });
           dispatch(getUserReplies(params.username))
             .then( () => this.setState({ isLoadingTab: false }))
-            .catch( e => this.setState({ isLoadingTab: false }));
+            .catch( (e: any) => this.setState({ isLoadingTab: false }));
         }
         break;
       case 2:
@@ -132,7 +131,7 @@ class ProfileContainer extends Component {
           this.setState({ isLoadingTab: true });
           dispatch(getUserFollowing(params.username))
             .then( () => this.setState({ isLoadingTab: false }))
-            .catch( e => this.setState({ isLoadingTab: false }));
+            .catch( (e: any) => this.setState({ isLoadingTab: false }));
         }
         break;
       case 3:
@@ -140,7 +139,7 @@ class ProfileContainer extends Component {
           this.setState({ isLoadingTab: true });
           dispatch(getUserFollowers(params.username))
             .then( () => this.setState({ isLoadingTab: false }))
-            .catch( e => this.setState({ isLoadingTab: false }));
+            .catch( (e: any) => this.setState({ isLoadingTab: false }));
         }
         break;
     }
@@ -158,7 +157,7 @@ class ProfileContainer extends Component {
             this.setState({ isLoadingMore: true });
             dispatch(getUserTopics(username, user.topics.length))
               .then( () => this.setState({ isLoadingMore: false }))
-              .catch( e => this.setState({ isLoadingMore: false }));
+              .catch( (e: any) => this.setState({ isLoadingMore: false }));
           }
           break;
         case 1:
@@ -166,7 +165,7 @@ class ProfileContainer extends Component {
             this.setState({ isLoadingMore: true });
             dispatch(getUserReplies(username, user.replies.length))
               .then( () => this.setState({ isLoadingMore: false }))
-              .then( e => this.setState({ isLoadingMore: false }));
+              .then( (e: any) => this.setState({ isLoadingMore: false }));
           }
           break;
         case 2:
@@ -174,7 +173,7 @@ class ProfileContainer extends Component {
             this.setState({ isLoadingMore: true });
             dispatch(getUserFollowing(username, user.following.length))
               .then( () => this.setState({ isLoadingMore: false }))
-              .catch( e => this.setState({ isLoadingMore: false }));
+              .catch( (e: any) => this.setState({ isLoadingMore: false }));
           }
           break;
         case 3:
@@ -182,7 +181,7 @@ class ProfileContainer extends Component {
             this.setState({ isLoadingMore: true });
             dispatch(getUserFollowers(username, user.followers.length))
               .then( () => this.setState({ isLoadingMore: false }))
-              .catch( e => this.setState({ isLoadingMore: false }));
+              .catch( (e: any) => this.setState({ isLoadingMore: false }));
           }
           break;
 
@@ -190,7 +189,7 @@ class ProfileContainer extends Component {
     }
   }
 
-  renderProfileList(user) {
+  renderProfileList(user: any) {
 
     if (this.state.isLoadingTab) {
       return <Spinner />;
@@ -199,16 +198,12 @@ class ProfileContainer extends Component {
     switch (this.state.selectedTab) {
       case 0:
         return <ProfileTopicList {...this.props} user={user} isLoadingMore={this.state.isLoadingMore} />;
-        break;
       case 1:
         return <ProfileReplyList {...this.props} user={user} isLoadingMore={this.state.isLoadingMore} />;
-        break;
       case 2:
         return <ProfileUserList {...this.props} user={user} type={"following"} isLoadingMore={this.state.isLoadingMore} />;
-        break;
       case 3:
         return <ProfileUserList {...this.props} user={user} type={"followers"} isLoadingMore={this.state.isLoadingMore} />;
-        break;
       default:
         return <ProfileTopicList />;
     }
@@ -243,7 +238,7 @@ class ProfileContainer extends Component {
   }
 }
 
-function mapStateToProps(state) {
+function mapStateToProps(state: any) {
 
   const { entities, topic, reply, user } = state;
   return {

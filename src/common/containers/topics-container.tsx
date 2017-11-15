@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 import { connect } from 'react-redux';
 
 import TopicList from '../components/topics-container/topic-list';
@@ -7,9 +7,11 @@ import SpinnerCircle from '../components/shared/spinner-circle';
 import { getTopics } from '../actions/topic';
 import { detectScrollEnd } from '../lib/scroll';
 
-class TopicsContainer extends Component {
+class TopicsContainer extends React.Component<any, any> {
 
-  constructor(props) {
+  static fetchData: any;
+
+  constructor(props: any) {
 
     super(props);
     this.loadMoreTopics = this.loadMoreTopics.bind(this);
@@ -31,7 +33,7 @@ class TopicsContainer extends Component {
 
     if (topic.items.length <= 10) {
       TopicsContainer.fetchData(dispatch)
-        .then((res) => {
+        .then((res: any) => {
           if (res && res.error) {
             this.setState({ error: res.error });
           }
@@ -69,11 +71,11 @@ class TopicsContainer extends Component {
   }
 }
 
-TopicsContainer.fetchData = (dispatch) => {
+TopicsContainer.fetchData = (dispatch: any) => {
   return dispatch(getTopics())
 };
 
-function mapStateToProps(state) {
+function mapStateToProps(state: any) {
 
   const { entities, topic, application } = state;
   return {
