@@ -1,6 +1,8 @@
 Ruby China mobile
 =======================
 
+> Currently I'm working on upgrade this years ago project to React 16 stack, master branch is not working right now
+
 > Remake version built with react, redux, react-router and using material design
 
 
