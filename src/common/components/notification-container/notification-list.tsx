@@ -1,11 +1,11 @@
-import React, { Component } from 'react';
+import * as React from 'react';
 
 import NotificationMentionItem from './notification-mention-item';
 import NotificationTopicReplyItem from './notification-topic-reply-item';
 import items from '../../constants/items';
 
 // notification type: Mention, TopicReply, NodeChanged
-export default class NotificationList extends Component {
+export default class NotificationList extends React.Component<any, any> {
 
   renderNotificationItem() {
     const { notification, entities } = this.props;
@@ -16,7 +16,7 @@ export default class NotificationList extends Component {
       );
     }
 
-    return notification.items.map((notificationId) => {
+    return notification.items.map((notificationId: any) => {
       let topic, reply;
       const notification = entities.notifications[notificationId];
       const notificationType = notification.type;
@@ -38,7 +38,6 @@ export default class NotificationList extends Component {
             topic={topic}
             key={`notification-${notificationId}`}
           />;
-          break;
         case items.NOTIFICATION_TOPIC_REPLY:
           return <NotificationTopicReplyItem
             notification={notification}
@@ -47,10 +46,8 @@ export default class NotificationList extends Component {
             reply={reply}
             key={`notification-${notificationId}`}
           />;
-          break;
         case items.NOTIFICATION_NODE_CHANGE:
           return (<div>暂时不支持的通知类型 {notificationType}</div>);
-          break;
         default:
           return (<div>暂时不支持的通知类型 {notificationType}</div>);
       }
