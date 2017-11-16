@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-
 import TopicList from '../components/topics-container/topic-list';
 import Spinner from '../components/shared/spinner';
 import SpinnerCircle from '../components/shared/spinner-circle';

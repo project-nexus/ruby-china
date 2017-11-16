@@ -1,6 +1,5 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
-
 import TopicDetailWithReplies from '../components/topic-container/topic-detail-with-replies';
 import Spinner from '../components/shared/spinner';
 import { getTopicDetailWithReplies, getMoreTopicReplies } from '../actions/topic';
@@ -10,16 +9,13 @@ import '../assets/stylesheets/highlight.css';
 class TopicContainer extends React.Component<any, any> {
 
   static propTypes = {
-
   }
 
   static fetchData: any;
 
   constructor(props: any) {
-
     super(props);
     this.loadMoreReplies = this.loadMoreReplies.bind(this);
-
     this.state = {
       isLoading: false,
       isLoadingMore: false
@@ -27,7 +23,7 @@ class TopicContainer extends React.Component<any, any> {
   }
 
   componentDidMount() {
-    const { dispatch, params } = this.props;
+    const { dispatch, match: { params } } = this.props;
 
     document.addEventListener('scroll', this.loadMoreReplies, false);
     document.addEventListener('touchMove', this.loadMoreReplies, false);
@@ -47,7 +43,7 @@ class TopicContainer extends React.Component<any, any> {
   }
 
   loadMoreReplies() {
-    const { dispatch, params, entities, reply } = this.props;
+    const { dispatch, match: { params }, entities, reply } = this.props;
 
     const topicId = params.topicId;
     let topic = entities.topics[topicId];
@@ -61,8 +57,7 @@ class TopicContainer extends React.Component<any, any> {
   }
 
   render() {
-
-    const { params, entities } = this.props;
+    const { match: { params }, entities } = this.props;
     let topic = entities.topics[params.topicId];
     let isLoading = this.state.isLoading;
     let isLoadingPartial = false;
@@ -88,7 +83,6 @@ TopicContainer.fetchData = (dispatch: any, params: any) => {
 };
 
 function mapStateToProps(state: any) {
-
   const { entities, topic, reply } = state;
   return {
     topic,

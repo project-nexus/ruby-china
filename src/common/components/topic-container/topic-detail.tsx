@@ -14,7 +14,7 @@ export default class TopicDetail extends React.Component<any, any> {
 
   render() {
 
-    const { params, entities, dispatch } = this.props;
+    const { match: { params }, entities, dispatch } = this.props;
 
     const topic = entities.topics[params.topicId];
     if (typeof topic === 'undefined') {

@@ -35,7 +35,7 @@ export default class TopicDetailWithReplies extends React.Component<any, any> {
   }
 
   renderLoadingSpinner(): any {
-    const { entities, reply, params } = this.props;
+    const { entities, reply, match: { params } } = this.props;
     const topic = entities.topics[params.topicId];
 
     if (typeof topic === 'undefined') {

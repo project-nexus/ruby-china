@@ -1,13 +1,13 @@
 'use strict';
 
 import * as React from 'react';
-// import { browserHistory } from 'react-router';
+import { withRouter } from 'react-router-dom';
 import { trackScrollPosition } from '../../actions/application';
 import UserAvatar from './../shared/user-avatar';
 import TopicActionBar from './../shared/topic-action-bar';
 import './topic-list-item.css';
 
-export default class TopicListItem extends React.Component<any, any> {
+class TopicListItem extends React.Component<any, any> {
 
   constructor(props: any) {
     super(props);
@@ -15,9 +15,9 @@ export default class TopicListItem extends React.Component<any, any> {
   }
 
   handleClick() {
-    const { dispatch } = this.props;
+    const { dispatch, history } = this.props;
     dispatch(trackScrollPosition(window.scrollY));
-    // browserHistory.push(`/topics/${this.props.topic.id}`);
+    history.push(`/topics/${this.props.topic.id}`);
   }
 
   render() {
@@ -30,7 +30,6 @@ export default class TopicListItem extends React.Component<any, any> {
           <UserAvatar size={48} radius={5}
                       src={user.avatar_url}
                       username={user.login} />
-
           <div className="topicMain" onClick={this.handleClick}>
             <div className="topicInfo">
               <span className="topicNode">{topic.node_name}</span>
@@ -49,3 +48,5 @@ export default class TopicListItem extends React.Component<any, any> {
     )
   }
 }
+
+export default withRouter(TopicListItem);
