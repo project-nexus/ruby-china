@@ -8,18 +8,16 @@ import {
   Route,
   Link
 } from 'react-router-dom'
+import injectTapEventPlugin from 'react-tap-event-plugin';
 import TopicsContainer from '../containers/topics-container';
 import NotificationsContainer from '../containers/notifications-container';
 import TopicContainer from '../containers/topic-container';
 import LoginContainer from '../containers/login-container';
 import ProfileContainer from '../containers/profile-container';
-
-
-import injectTapEventPlugin from 'react-tap-event-plugin';
 import NavigationBar from '../components/app/navigation-bar';
 import '../assets/stylesheets/global.css';
 
-// injectTapEventPlugin();
+injectTapEventPlugin();
 
 class App extends React.Component<any, any> {
 
