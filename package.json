@@ -4,12 +4,6 @@
   "description": "Ruby-China site remake version with cutting edge frontend tech like React, Redux, isomorphic-app",
   "main": "index.js",
   "scripts": {
-    "dev": "NODE_ENV=development nodemon --exec node server",
-    "debug": "NODE_ENV=debug nodemon --exec devtool server",
-    "build": "NODE_ENV=production webpack",
-    "production": "NODE_ENV=production node server",
-    "deploy": "pm2 deploy ecosystem.json production",
-    "deploy-setup": "pm2 deploy ecosystem.json production setup",
     "start": "react-scripts-ts start"
   },
   "author": "vincent.007.cn@gmail.com",

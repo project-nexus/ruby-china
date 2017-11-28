@@ -1,7 +1,5 @@
-'use strict';
-
 import * as React from 'react';
-import * as PropTypes from 'prop-types'; // ES6
+import * as PropTypes from 'prop-types'; 
 import { connect } from 'react-redux';
 import {
   BrowserRouter as Router,
