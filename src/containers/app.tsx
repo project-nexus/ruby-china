@@ -11,12 +11,12 @@ import LoginContainer from '../containers/login-container';
 import ProfileContainer from '../containers/profile-container';
 import NavigationBar from '../components/app/navigation-bar';
 
-const App = (props) => (
+const App = (props: any) => (
   <Router>
     <div>
       <div className="container">
-        <NavigationBar {...this.props} />
-        {this.props.children}
+        <NavigationBar {...props} />
+        {props.children}
       </div>
 
       <Route exact path="/" component={TopicsContainer} />

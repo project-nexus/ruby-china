@@ -4,10 +4,10 @@ import * as classNames from 'classnames';
 import '../assets/navigation-bar.css';
 
 interface Tab {
-  path: string,
-  icon: string,
-  text: string,
-  selected: boolean;
+  path: string
+  icon: string
+  text: string
+  selected: boolean
 }
 
 // const topicsTab = ['/', 'fa fa-comments', '社区'];
@@ -17,7 +17,7 @@ interface Tab {
 
 export default (props: {tabs: Array<Tab>}) => {
 
-  const renderSubNav = (path: string, icon: string, text: string, selected: boolean = false) => (
+  const renderSubNav = ({path, icon, text, selected = false}: Tab) => (
     <Link to={path}>
       <div className={classNames('tabItemContainer', {selected})}>
         <span>
@@ -30,8 +30,7 @@ export default (props: {tabs: Array<Tab>}) => {
     
   return (
     <div className="tabBar">
-      {props.tabs.map(tab => renderSubNav(tab.path, tab.icon, tab.text, tab.selected))}
+      {props.tabs.map(renderSubNav)}
     </div>
   )
 }
-
