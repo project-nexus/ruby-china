@@ -12,6 +12,7 @@ import TopicContainer from '../containers/topic-container';
 import LoginContainer from '../containers/login-container';
 import ProfileContainer from '../containers/profile-container';
 import NavigationBar from '../components/app/navigation-bar';
+import TestContainer from '../../containers/Topics';
 import '../assets/stylesheets/global.css';
 
 
@@ -35,7 +36,8 @@ class App extends React.Component<any, any> {
           <Route path="/notifications" component={NotificationsContainer} />
           <Route path="/login" component={LoginContainer} />
           <Route path="/topics/:topicId" component={TopicContainer} />
-          <Route path="/:username" component={ProfileContainer} />
+          <Route path="/users/:username" component={ProfileContainer} />
+          <Route path="/test" component={TestContainer} />
         </div>
       </Router>
     );

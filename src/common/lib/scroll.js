@@ -30,3 +30,6 @@ export function detectScrollEnd() {
   return getScrollXY()[1] >= getDocHeight() - window.innerHeight - 60;
 }
 
+export function detectPullHead() {
+}
+

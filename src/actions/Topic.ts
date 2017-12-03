@@ -1,6 +1,5 @@
 
 const pagination = {
-  
 }
 
 function fetchTopicsRaw() {

@@ -73,4 +73,20 @@ img {
     align-items: center;
 }
 
+:global(.pullToRefreshLoading) {
+    position: absolute;
+    height: 60px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -60px;
+}
 
+
+:global(.pullToRefreshLoading::after) {
+    content: '';
+    width: 40px;
+    padding-bottom: 40px;
+    background: red;
+}
