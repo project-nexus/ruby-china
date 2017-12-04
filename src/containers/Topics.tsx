@@ -16,12 +16,13 @@ const DummyTopicList = () => (
   </div>
 )
 
-const MAX_PULL_TO_REFRESH = 80;
+const MAX_PULL_TO_REFRESH = 100;
 
 // TopicsContainer is responsible for home page (path: /)
 class TopicsContainer extends React.PureComponent<any, any> {
 
   topicsRef: any
+  pullToRefreshLoading: any
 
   // pagination
   // tab
@@ -56,11 +57,8 @@ class TopicsContainer extends React.PureComponent<any, any> {
         e.preventDefault();
         const maringTop = `${(detlaY > MAX_PULL_TO_REFRESH ? MAX_PULL_TO_REFRESH : detlaY) - 60}px`;
         console.log(maringTop);
-        const list: any = document.querySelector('#pullToRefreshLoading');
         this.setState({detlaY});
-        if (list) {
-          list.style.marginTop = maringTop;
-        }
+        this.pullToRefreshLoading.style.marginTop = maringTop;
       }
     }
   }
@@ -70,12 +68,14 @@ class TopicsContainer extends React.PureComponent<any, any> {
   }
 
   handleTouchEnd(e: TouchEvent) {
-    this.setState({lastTouch: null});
-    const list: any = document.querySelector('#pullToRefreshLoading');
-    list.style.marginTop = '-60px';
+    this.pullToRefreshLoading.style.marginTop = '-60px';
     if (this.state.detlaY > MAX_PULL_TO_REFRESH) {
       this.triggerRefresh();
     }
+    this.setState({
+      lastTouch: null,
+      detlaY: 0
+    });
   }
 
   triggerRefresh() {
@@ -95,7 +95,7 @@ class TopicsContainer extends React.PureComponent<any, any> {
   render() {
     return (
       <div>
-        <div id="pullToRefreshLoading" className="pullToRefreshLoading">
+        <div id="pullToRefreshLoading" className="pullToRefreshLoading" ref={(dom) => this.pullToRefreshLoading = dom}>
         </div>
         <div id="list">
           <div className="pullToRefresh"></div>
