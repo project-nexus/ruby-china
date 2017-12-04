@@ -29,7 +29,6 @@ export default class TopicComponent extends React.PureComponent<any, any> {
   render() {
     return (
       <div>
-
       </div>
     );
   }
