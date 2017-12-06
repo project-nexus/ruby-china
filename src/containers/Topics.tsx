@@ -95,8 +95,7 @@ class TopicsContainer extends React.PureComponent<any, any> {
   render() {
     return (
       <div>
-        <div id="pullToRefreshLoading" className="pullToRefreshLoading" ref={(dom) => this.pullToRefreshLoading = dom}>
-        </div>
+        <div id="pullToRefreshLoading" className="pullToRefreshLoading" ref={(dom) => this.pullToRefreshLoading = dom}></div>
         <div id="list">
           <div className="pullToRefresh"></div>
           <DummyTopicList />
