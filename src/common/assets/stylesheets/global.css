@@ -55,14 +55,18 @@ img {
 }
 
 :global(.container) {
-    width: 100%;
     height: 100%;
     padding-top: 46px;
+    width: 100%;
 
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    color: rgb(102, 117, 127);
+    color: rgb(102, 117, 127); 
+    background: #f2f2f2;
+}
+
+:global(.wrapper) {
+    max-width: 750px;
+    margin: 0 auto;
+    background: #fff;
 }
 
 :global(.center-container) {

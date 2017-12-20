@@ -1,8 +1,7 @@
 .tabBar {
     position: fixed;
     top: 0;
-    left: 0;
-    width: 100%;
+    width: 750px;
     height: 46px;
     background-color: white;
     display: flex;

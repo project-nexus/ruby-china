@@ -25,19 +25,19 @@ class App extends React.Component<any, any> {
   render() {
     return (
       <Router>
-        <div>
-          <div className="container">
+        <div className="container">
+          <div className="wrapper">
             <NavigationBar {...this.props} />
             {this.props.children}
-          </div>
 
-          <Route exact path="/" component={TopicsContainer} />
-          <Route path="/me" component={ProfileContainer} />
-          <Route path="/notifications" component={NotificationsContainer} />
-          <Route path="/login" component={LoginContainer} />
-          <Route path="/topics/:topicId" component={TopicContainer} />
-          <Route path="/users/:username" component={ProfileContainer} />
-          <Route path="/test" component={TestContainer} />
+            <Route exact path="/" component={TopicsContainer} />
+            <Route path="/me" component={ProfileContainer} />
+            <Route path="/notifications" component={NotificationsContainer} />
+            <Route path="/login" component={LoginContainer} />
+            <Route path="/topics/:topicId" component={TopicContainer} />
+            <Route path="/test" component={TestContainer} />
+            <Route path="/:username" component={ProfileContainer} />
+          </div>
         </div>
       </Router>
     );

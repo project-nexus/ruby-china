@@ -4,9 +4,9 @@ import config from '../config';
 /*
   This HOC is only used for container, don't hook it to normal component
  */
-export default function withPullToRefresh(component: React.Component, dispatch: Function, action: string) {
+export default function withPullToRefresh(WrappedComponent: any, dispatch?: Function, action?: string) {
 
-  return class extends React.PureComponent<null, PullToRefreshState> {
+  return class extends React.PureComponent<any, PullToRefreshState> {
 
     dom: any
 
@@ -19,13 +19,25 @@ export default function withPullToRefresh(component: React.Component, dispatch: 
       }
     }
 
-    handleTouchStart(e: React.TouchEvent<Element>) {
-      this.setState({lastTouch: e.touches[0]});
+    handleTouchStart(e: any) {
+      this.handleMouseDown(e.touches[0]);
     }
 
-    handleTouchMove(e: React.TouchEvent<Element>) {
+    handleTouchMove(e: any) {
+      this.handleMouseMove(e.touches[0]);
+    }
+
+    handleTouchEnd(e: any) {
+      this.handleMouseUp(e);
+    }
+
+    handleMouseDown(e: any) {
+      this.setState({lastTouch: e});
+    }
+
+    handleMouseMove(e: any) {
       if (window.pageYOffset === 0 && this.state.lastTouch)  {
-        const touch = e.touches[0];
+        const touch = e;
         const detlaY = touch.screenY - this.state.lastTouch.screenY;
         if (detlaY > 0) {
           e.preventDefault();
@@ -37,10 +49,12 @@ export default function withPullToRefresh(component: React.Component, dispatch: 
       }
     }
 
-    handleTouchEnd(e: React.TouchEvent<Element>) {
+    handleMouseUp(e: any) {
       this.dom.style.marginTop = '-60px';
       if (this.state.detlaY > config.MAX_PULL_TO_REFRESH) {
-        dispatch(action);
+        if (dispatch && action) {
+          dispatch(action);
+        }
       }
       this.setState({
         lastTouch: null,
@@ -50,22 +64,30 @@ export default function withPullToRefresh(component: React.Component, dispatch: 
 
     componentDidMount() {
       const options: any = {passive: false, capture: false};
-      document.addEventListener('touchstart', (e: any) => this.handleTouchStart(e), false);
-      document.addEventListener('touchmove', (e: any) => this.handleTouchMove(e), options);
-      document.addEventListener('touchend', (e: any) => this.handleTouchEnd(e), false);
+      document.addEventListener('touchstart', e => this.handleTouchStart(e), false);
+      document.addEventListener('touchmove', e => this.handleTouchMove(e), options);
+      document.addEventListener('touchend', e => this.handleTouchEnd(e), false);
+      document.addEventListener('mousedown', e => this.handleMouseDown(e), false);
+      document.addEventListener('mousemove', e => this.handleMouseMove(e), false);
+      document.addEventListener('mouseup', e => this.handleMouseUp(e), false);
     }
 
     componentWillUnmount() {
-      document.removeEventListener('touchstart', (e: any) => this.handleTouchStart(e));
-      document.removeEventListener('touchmove', (e: any) => this.handleTouchMove(e));
-      document.removeEventListener('touchend', (e: any) => this.handleTouchEnd(e));
+      document.removeEventListener('touchstart', e => this.handleTouchStart(e));
+      document.removeEventListener('touchmove', e => this.handleTouchMove(e));
+      document.removeEventListener('touchend', e => this.handleTouchEnd(e));
+      document.removeEventListener('mousedown', e => this.handleMouseDown(e));
+      document.removeEventListener('mousemove', e => this.handleMouseMove(e));
+      document.removeEventListener('mouseup', e => this.handleMouseUp(e));
     }
 
     render() {
       return (
         <div>
-          <div className="pullToRefreshLoading" ref={(dom) => this.dom = dom}></div>
-          {component}
+          <div className="pullToRefreshLoading" ref={(dom) => this.dom = dom}>
+            <i className="fa fa-long-arrow-down" aria-hidden="true"></i>
+          </div>
+          <WrappedComponent {...this.props} />
         </div>
       );
     }
