@@ -59,7 +59,7 @@ class NotificationsContainer extends React.Component<any, any> {
 
   render() {
     if (this.state.isLoading) {
-      return <SpinnerCircle />;
+      return <SpinnerCircle width={30} />;
     }
 
     return (

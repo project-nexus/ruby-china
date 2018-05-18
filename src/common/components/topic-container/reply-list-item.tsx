@@ -18,7 +18,7 @@ export default class ReplyListItem extends React.Component<any, any> {
           <div className="topicInfo">
             <span className="topicLogin">{`@${user.login}`}</span>
           </div>
-          <div dangerouslySetInnerHTML={replyBodyHtml} />
+          <div className="markdown" dangerouslySetInnerHTML={replyBodyHtml} />
         </div>
       </div>
     );

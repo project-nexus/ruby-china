@@ -6,7 +6,7 @@ import ProfileNavigation from '../components/profile-container/profile-navigatio
 import ProfileTopicList from '../components/profile-container/profile-topic-list';
 import ProfileReplyList from '../components/profile-container/profile-reply-list';
 import ProfileUserList from '../components/profile-container/profile-user-list';
-import Spinner from '../components/shared/spinner';
+import SpinnerCircle from '../components/shared/spinner-circle';
 import { getToken } from '../lib/util';
 import { authenticatedAction } from '../lib/util';
 import { detectScrollEnd } from '../lib/scroll';
@@ -193,7 +193,7 @@ class ProfileContainer extends React.Component<any, any> {
   renderProfileList(user: any) {
 
     if (this.state.isLoadingTab) {
-      return <Spinner />;
+      return <SpinnerCircle width={30} />;
     }
 
     switch (this.state.selectedTab) {
@@ -213,7 +213,7 @@ class ProfileContainer extends React.Component<any, any> {
   render() {
 
     if (this.state.isLoading) {
-      return <Spinner />
+      return <SpinnerCircle width={30} />
     }
 
     const username = this.getUsername();

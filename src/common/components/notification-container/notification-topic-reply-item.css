@@ -8,12 +8,10 @@
 
 .topicReplyItemContainer span {
     word-break: break-all;
-    white-space: pre-wrap;
 }
 
 .topicReplyItemContainer code {
     word-break: break-all;
-    white-space: pre-wrap;
 }
 
 .topicReplyItemDetails {

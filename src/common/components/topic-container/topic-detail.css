@@ -1,6 +1,5 @@
 .topicDetail {
     word-break: break-all;
-    white-space: pre-wrap;
 }
 
 .topicDetail img {
@@ -9,17 +8,20 @@
 
 .topicDetail span {
     word-break: break-all;
-    white-space: pre-wrap;
 }
 
 .topicDetail code {
     word-break: break-all;
-    white-space: pre-wrap;
 }
 
 .topicDetailBody {
-    padding: 0 9px 10px;
+    padding: 10px 12px;
     border-bottom: 1px solid #eee;
+    line-height: 1.4em;
+}
+
+.topicDetailBody>div :not(:last-child) {
+    /* padding-bottom: 6px;  */
 }
 
 .topicDetailActionBar {

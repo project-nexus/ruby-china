@@ -11,12 +11,10 @@
     flex-direction: column;
     border-bottom: 1px solid #eee;
     word-break: break-all;
-    white-space: pre-wrap;
 }
 
 .profileListItemContainer code {
     word-break: break-all;
-    white-space: pre-wrap;
 }
 
 .profileListItemContainer img {

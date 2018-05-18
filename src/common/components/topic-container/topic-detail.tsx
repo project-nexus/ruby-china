@@ -2,7 +2,7 @@ import * as React from 'react';
 import UserAvatar from '../shared/user-avatar';
 import TopicActionBar from '../shared/topic-action-bar';
 import TopicDetailHeader from './topic-detail-header';
-import Spinner from '../shared/spinner';
+import SpinnerCircle from '../shared/spinner-circle';
 import './topic-detail.css';
 
 
@@ -30,7 +30,7 @@ export default class TopicDetail extends React.Component<any, any> {
       return (
         <div className="topicDetail">
           <TopicDetailHeader topic={topic} user={user} />
-          <Spinner />
+          <SpinnerCircle width={30} />
         </div>
       );
     }
@@ -40,7 +40,7 @@ export default class TopicDetail extends React.Component<any, any> {
       <div className="topicDetail">
         <TopicDetailHeader topic={topic} user={user} />
         <div className="topicDetailBody">
-          <div dangerouslySetInnerHTML={topicBodyHtml} ></div>
+          <div className="markdown" dangerouslySetInnerHTML={topicBodyHtml} ></div>
         </div>
         <div className="topicDetailActionBar">
           <TopicActionBar topic={topic} dispatch={dispatch} interactive={true} />

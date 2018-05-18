@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import TopicList from '../components/topics-container/topic-list';
-import Spinner from '../components/shared/spinner';
 import SpinnerCircle from '../components/shared/spinner-circle';
 import { getTopics } from '../actions/topic';
 import { detectScrollEnd } from '../lib/scroll';
@@ -58,7 +57,7 @@ class TopicsContainer extends React.Component<any, any> {
     const { topic } = this.props;
 
     if (topic.items.length <= 10) {
-      return <Spinner />;
+      return <SpinnerCircle width={30} />;
     }
 
     return (

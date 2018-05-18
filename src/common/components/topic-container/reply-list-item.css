@@ -4,7 +4,6 @@
     display: flex;
     border-bottom: 1px solid #eee;
     word-break: break-all;
-    white-space: pre-wrap;
 }
 
 .replyListItemContainer img {
@@ -13,12 +12,10 @@
 
 .replyListItemContainer span {
     word-break: break-all;
-    white-space: pre-wrap;
 }
 
 .replyListItemContainer code {
     word-break: break-all;
-    white-space: pre-wrap;
 }
 
 .replyListItemContainer a {

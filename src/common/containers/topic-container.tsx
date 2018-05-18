@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import TopicDetailWithReplies from '../components/topic-container/topic-detail-with-replies';
-import Spinner from '../components/shared/spinner';
+import SpinnerCircle from '../components/shared/spinner-circle';
 import { getTopicDetailWithReplies, getMoreTopicReplies } from '../actions/topic';
 import { detectScrollEnd } from '../lib/scroll';
 import '../assets/stylesheets/highlight.css';
@@ -70,7 +70,7 @@ class TopicContainer extends React.Component<any, any> {
     }
 
     if (isLoading && !isLoadingPartial) {
-      return <Spinner />;
+      return <SpinnerCircle width={30} />;
     }
 
     return <TopicDetailWithReplies {...this.props} isLoadingPartial={ isLoadingPartial } />;
