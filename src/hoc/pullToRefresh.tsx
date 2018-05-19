@@ -4,18 +4,18 @@ import config from '../config';
 /*
   This HOC is only used for container, don't hook it to normal component
  */
-export default function withPullToRefresh(WrappedComponent: any, dispatch?: Function, action?: string) {
+export default function withPullToRefresh(WrappedComponent: any, action: Function) {
 
   return class extends React.PureComponent<any, PullToRefreshState> {
-
-    dom: any
 
     constructor(props: any) {
       super(props);
 
       this.state = {
         lastTouch: null,
-        detlaY: 0
+        detlaY: 0,
+        marginTop: -40,
+        isLoading: false
       }
     }
 
@@ -40,25 +40,29 @@ export default function withPullToRefresh(WrappedComponent: any, dispatch?: Func
         const touch = e;
         const detlaY = touch.screenY - this.state.lastTouch.screenY;
         if (detlaY > 0) {
-          e.preventDefault();
-          const maringTop = `${(detlaY > config.MAX_PULL_TO_REFRESH ? config.MAX_PULL_TO_REFRESH : detlaY) - 60}px`;
-          console.log(maringTop);
-          this.setState({detlaY});
-          this.dom.style.marginTop = maringTop;
+          const body = document.querySelector('body');
+          const marginTop = (detlaY > config.MAX_PULL_TO_REFRESH ? config.MAX_PULL_TO_REFRESH : detlaY) - 60;
+          // document.querySelector('body')!.style.overflow = 'hidden';
+          this.setState({marginTop})
+          this.setState({detlaY, marginTop});
         }
       }
     }
 
     handleMouseUp(e: any) {
-      this.dom.style.marginTop = '-60px';
       if (this.state.detlaY > config.MAX_PULL_TO_REFRESH) {
-        if (dispatch && action) {
-          dispatch(action);
-        }
+        const { dispatch } = this.props;
+        this.setState({isLoading: true});
+        dispatch(action()).then(() => {
+          this.setState({
+            isLoading: false
+          })
+        });
       }
       this.setState({
         lastTouch: null,
-        detlaY: 0
+        detlaY: 0,
+        marginTop: -60
       });
     }
 
@@ -73,6 +77,7 @@ export default function withPullToRefresh(WrappedComponent: any, dispatch?: Func
     }
 
     componentWillUnmount() {
+      // document.querySelector('body')!.style.overflow = 'unset';
       document.removeEventListener('touchstart', e => this.handleTouchStart(e));
       document.removeEventListener('touchmove', e => this.handleTouchMove(e));
       document.removeEventListener('touchend', e => this.handleTouchEnd(e));
@@ -84,8 +89,8 @@ export default function withPullToRefresh(WrappedComponent: any, dispatch?: Func
     render() {
       return (
         <div>
-          <div className="pullToRefreshLoading" ref={(dom) => this.dom = dom}>
-            <i className="fa fa-long-arrow-down" aria-hidden="true"></i>
+          <div className="pullToRefreshLoading" style={{marginTop: this.state.isLoading ? config.MAX_PULL_TO_REFRESH+'px' : this.state.marginTop+"px"}}>
+            <i className={`icon ion-md-refresh ${this.state.isLoading ? 'loading' : null}`} style={{transform: this.state.marginTop > 0 ? `rotate(${this.state.marginTop*9}deg)` : "rotate(0deg)"}}></i>
           </div>
           <WrappedComponent {...this.props} />
         </div>
@@ -96,5 +101,7 @@ export default function withPullToRefresh(WrappedComponent: any, dispatch?: Func
 
 interface PullToRefreshState {
   lastTouch: any
-  detlaY: number
+  detlaY: number,
+  marginTop: number,
+  isLoading: boolean
 }

@@ -62,6 +62,6 @@ class TopicsContainer extends React.Component<any, any> {
   }
 }
 
-export default connect()(pullToRefresh(TopicsContainer));
+export default connect()(TopicsContainer);
 
 

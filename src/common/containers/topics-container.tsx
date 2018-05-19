@@ -4,6 +4,7 @@ import TopicList from '../components/topics-container/topic-list';
 import SpinnerCircle from '../components/shared/spinner-circle';
 import { getTopics } from '../actions/topic';
 import { detectScrollEnd } from '../lib/scroll';
+import withPullToRefresh from '../../hoc/pullToRefresh';
 
 class TopicsContainer extends React.Component<any, any> {
 
@@ -83,4 +84,4 @@ function mapStateToProps(state: any) {
   }
 }
 
-export default connect(mapStateToProps)(TopicsContainer);
+export default connect(mapStateToProps)(withPullToRefresh(TopicsContainer, getTopics));
