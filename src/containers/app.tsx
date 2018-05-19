@@ -21,12 +21,12 @@ export default (props: any) => (
         {props.children}
 
         <Route exact path="/" component={TopicsContainer} />
-        <Route path="/me" component={ProfileContainer} />
-        <Route path="/notifications" component={NotificationsContainer} />
-        <Route path="/login" component={LoginContainer} />
-        <Route path="/topics/:topicId" component={TopicContainer} />
-        <Route path="/test" component={TestContainer} />
-        <Route path="/:username" component={ProfileContainer} />
+        <Route exact path="/me" component={ProfileContainer} />
+        <Route exact path="/notifications" component={NotificationsContainer} />
+        <Route exact path="/login" component={LoginContainer} />
+        <Route exact path="/topics/:topicId" component={TopicContainer} />
+        <Route exact path="/test" component={TestContainer} />
+        <Route exact path="/:username" component={ProfileContainer} />
       </div>
     </div>
   </Router>

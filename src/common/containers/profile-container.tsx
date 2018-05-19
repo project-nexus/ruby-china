@@ -150,7 +150,6 @@ class ProfileContainer extends React.Component<any, any> {
   loadMoreContent() {
     if (detectScrollEnd() && this.state.isLoadingMore === false) {
       let { dispatch, match: { params: { username } }, entities: { users } } = this.props;
-      debugger;
       let user = users[username];
       switch (this.state.selectedTab) {
         case 0:

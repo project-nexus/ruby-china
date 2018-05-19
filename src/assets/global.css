@@ -19,6 +19,7 @@ pre code {
   overflow-y: hidden;
   overflow-x: auto;
   width: 100%;
+  line-height: 1.6em;
 }
 
 a {
@@ -111,4 +112,7 @@ img {
 
 :global(.markdown) {
   line-height: 1.6em;
+}
+
+:global(.max-box) {
 }
