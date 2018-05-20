@@ -11,6 +11,14 @@ export default function withPullToRefresh(WrappedComponent: any, action: Functio
     constructor(props: any) {
       super(props);
 
+      this.handleTouchStart = this.handleTouchStart.bind(this);
+      this.handleTouchMove = this.handleTouchMove.bind(this);
+      this.handleTouchEnd = this.handleTouchEnd.bind(this);
+
+      this.handleMouseDown = this.handleMouseDown.bind(this);
+      this.handleMouseMove = this.handleMouseMove.bind(this);
+      this.handleMouseUp = this.handleMouseUp.bind(this);
+
       this.state = {
         lastTouch: null,
         detlaY: 0,
@@ -42,7 +50,6 @@ export default function withPullToRefresh(WrappedComponent: any, action: Functio
         if (detlaY > 0) {
           const body = document.querySelector('body');
           const marginTop = (detlaY > config.MAX_PULL_TO_REFRESH ? config.MAX_PULL_TO_REFRESH : detlaY) - 60;
-          // document.querySelector('body')!.style.overflow = 'hidden';
           this.setState({marginTop})
           this.setState({detlaY, marginTop});
         }
@@ -68,29 +75,29 @@ export default function withPullToRefresh(WrappedComponent: any, action: Functio
 
     componentDidMount() {
       const options: any = {passive: false, capture: false};
-      document.addEventListener('touchstart', e => this.handleTouchStart(e), false);
-      document.addEventListener('touchmove', e => this.handleTouchMove(e), options);
-      document.addEventListener('touchend', e => this.handleTouchEnd(e), false);
-      document.addEventListener('mousedown', e => this.handleMouseDown(e), false);
-      document.addEventListener('mousemove', e => this.handleMouseMove(e), false);
-      document.addEventListener('mouseup', e => this.handleMouseUp(e), false);
+      document.addEventListener('touchstart', this.handleTouchStart, false);
+      document.addEventListener('touchmove', this.handleTouchMove, options);
+      document.addEventListener('touchend', this.handleTouchEnd, false);
+      document.addEventListener('mousedown', this.handleMouseDown, false);
+      document.addEventListener('mousemove', this.handleMouseMove, false);
+      document.addEventListener('mouseup', this.handleMouseUp, false);
     }
 
     componentWillUnmount() {
-      // document.querySelector('body')!.style.overflow = 'unset';
-      document.removeEventListener('touchstart', e => this.handleTouchStart(e));
-      document.removeEventListener('touchmove', e => this.handleTouchMove(e));
-      document.removeEventListener('touchend', e => this.handleTouchEnd(e));
-      document.removeEventListener('mousedown', e => this.handleMouseDown(e));
-      document.removeEventListener('mousemove', e => this.handleMouseMove(e));
-      document.removeEventListener('mouseup', e => this.handleMouseUp(e));
+      const options: any = {passive: false, capture: false};
+      document.removeEventListener('touchstart', this.handleTouchStart);
+      document.removeEventListener('touchmove', this.handleTouchMove, options);
+      document.removeEventListener('touchend', this.handleTouchEnd);
+      document.removeEventListener('mousedown', this.handleMouseDown);
+      document.removeEventListener('mousemove', this.handleMouseMove);
+      document.removeEventListener('mouseup', this.handleMouseUp);
     }
 
     render() {
       return (
         <div>
-          <div className="pullToRefreshLoading" style={{marginTop: this.state.isLoading ? config.MAX_PULL_TO_REFRESH+'px' : this.state.marginTop+"px"}}>
-            <i className={`icon ion-md-refresh ${this.state.isLoading ? 'loading' : null}`} style={{transform: this.state.marginTop > 0 ? `rotate(${this.state.marginTop*9}deg)` : "rotate(0deg)"}}></i>
+          <div className="pullToRefreshLoading" style={{marginTop: this.state.isLoading ? '8px' : this.state.marginTop+"px"}}>
+              <i className={`icon ion-md-refresh ${this.state.isLoading ? 'loading' : null}`} style={{transform: this.state.marginTop > -10 ? `rotate(${(this.state.marginTop+10)*6}deg)` : "rotate(0deg)"}}></i>
           </div>
           <WrappedComponent {...this.props} />
         </div>
