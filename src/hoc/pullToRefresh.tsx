@@ -97,7 +97,7 @@ export default function withPullToRefresh(WrappedComponent: any, action: Functio
       return (
         <div>
           <div className="pullToRefreshLoading" style={{marginTop: this.state.isLoading ? '8px' : this.state.marginTop+"px"}}>
-              <i className={`icon ion-md-refresh ${this.state.isLoading ? 'loading' : null}`} style={{transform: this.state.marginTop > -10 ? `rotate(${(this.state.marginTop+10)*6}deg)` : "rotate(0deg)"}}></i>
+              <i className={`icon ion-md-refresh ${this.state.isLoading ? 'loading' : null}`} style={{transform: this.state.marginTop > -20 ? `rotate(${(this.state.marginTop+20)*6}deg)` : "rotate(0deg)"}}></i>
           </div>
           <WrappedComponent {...this.props} />
         </div>
