@@ -92,17 +92,6 @@ img {
   align-items: center;
 }
 
-:global(.pullToRefreshLoading) {
-  position: absolute;
-  height: 60px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: -60px;
-  font-size: 2em;
-}
-
 :global(.loading) {
   animation: rotator 1s linear infinite;
 }

@@ -1,0 +1,23 @@
+.pullToRefreshContainer {
+  position: relative;
+}
+
+.pullToRefreshLoading {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.6em;
+}
+
+.spinner-container {
+  width: 36px;
+  height: 36px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 46px;
+  border: 1px solid #eee;
+}

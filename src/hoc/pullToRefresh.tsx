@@ -1,12 +1,17 @@
 import * as React from 'react';
-import config from '../config';
+import LoadingCircle from '../common/components/shared/spinner-circle';
+import './pull-to-refresh.css';
+
+
+ const DEFAULT_SPINNER_SIZE = 38;
+ const DEFAULT_PULL_DOWN_DISTANCE = DEFAULT_SPINNER_SIZE + 50;
 
 /*
   This HOC is only used for container, don't hook it to normal component
  */
 export default function withPullToRefresh(WrappedComponent: any, action: Function) {
 
-  return class extends React.PureComponent<any, PullToRefreshState> {
+  return class extends React.PureComponent<PullToRefreshProps, PullToRefreshState> {
 
     constructor(props: any) {
       super(props);
@@ -21,8 +26,7 @@ export default function withPullToRefresh(WrappedComponent: any, action: Functio
 
       this.state = {
         lastTouch: null,
-        detlaY: 0,
-        marginTop: -40,
+        detlaY: 0,  
         isLoading: false
       }
     }
@@ -40,7 +44,9 @@ export default function withPullToRefresh(WrappedComponent: any, action: Functio
     }
 
     handleMouseDown(e: any) {
-      this.setState({lastTouch: e});
+      if (!this.state.isLoading) {
+        this.setState({lastTouch: e});
+      }
     }
 
     handleMouseMove(e: any) {
@@ -48,29 +54,28 @@ export default function withPullToRefresh(WrappedComponent: any, action: Functio
         const touch = e;
         const detlaY = touch.screenY - this.state.lastTouch.screenY;
         if (detlaY > 0) {
-          const body = document.querySelector('body');
-          const marginTop = (detlaY > config.MAX_PULL_TO_REFRESH ? config.MAX_PULL_TO_REFRESH : detlaY) - 60;
-          this.setState({marginTop})
-          this.setState({detlaY, marginTop});
+          document.body.style.overflow = 'hidden';
+          this.setState({detlaY});
         }
       }
     }
 
     handleMouseUp(e: any) {
-      if (this.state.detlaY > config.MAX_PULL_TO_REFRESH) {
-        const { dispatch } = this.props;
+      if (this.state.detlaY > this.getPullDownDistance()) {
+        const { dispatch } = this.props as any;
         this.setState({isLoading: true});
         dispatch(action()).then(() => {
-          this.setState({
-            isLoading: false
-          })
-        });
+          this.resetOverflow();
+          this.resetState();
+        }).catch((e: any) => {
+          console.log(e);
+          this.resetOverflow();
+          this.resetState();
+        })
+      } else {
+        this.resetOverflow();
+        this.resetState();
       }
-      this.setState({
-        lastTouch: null,
-        detlaY: 0,
-        marginTop: -60
-      });
     }
 
     componentDidMount() {
@@ -84,6 +89,7 @@ export default function withPullToRefresh(WrappedComponent: any, action: Functio
     }
 
     componentWillUnmount() {
+      this.resetOverflow();
       const options: any = {passive: false, capture: false};
       document.removeEventListener('touchstart', this.handleTouchStart);
       document.removeEventListener('touchmove', this.handleTouchMove, options);
@@ -94,14 +100,50 @@ export default function withPullToRefresh(WrappedComponent: any, action: Functio
     }
 
     render() {
+
+      const { detlaY, isLoading } = this.state;
+      const pullDownDistance = detlaY > this.getPullDownDistance() ? this.getPullDownDistance() : detlaY;
+      console.log("pullDownDistance: ", pullDownDistance);
+      const marginTop = pullDownDistance - this.getSpinnerSize();
+
+      const step = 1.0/(this.getPullDownDistance()/2);
+      console.log("opacity: ", pullDownDistance*step);
+
+
       return (
-        <div>
-          <div className="pullToRefreshLoading" style={{marginTop: this.state.isLoading ? '8px' : this.state.marginTop+"px"}}>
-              <i className={`icon ion-md-refresh ${this.state.isLoading ? 'loading' : null}`} style={{transform: this.state.marginTop > -20 ? `rotate(${(this.state.marginTop+20)*6}deg)` : "rotate(0deg)"}}></i>
+        <div className="pullToRefreshContainer">
+          <div className="pullToRefreshLoading" style={{marginTop: isLoading ? `${marginTop-30}px` : `${marginTop}px`}}>
+            <div className="spinner-container">
+              { this.state.isLoading ? 
+                <LoadingCircle width={30} /> :
+               <i className='icon ion-md-refresh' style={{transform: `rotate(${marginTop*6}deg)`, opacity: pullDownDistance*step, color: '#0336FF'}}></i>
+              }
+            </div>
           </div>
+
           <WrappedComponent {...this.props} />
         </div>
       );
+    }
+
+    private getSpinnerSize(): number {
+      return this.props.size ? this.props.size : DEFAULT_SPINNER_SIZE;
+    }
+
+    private getPullDownDistance() {
+      return this.props.pullDownDistance ? this.props.pullDownDistance : DEFAULT_PULL_DOWN_DISTANCE;
+    }
+
+    private resetOverflow() {
+      document.body.style.overflow = 'unset';
+    }
+
+    private resetState() {
+      this.setState({
+        lastTouch: null,
+        detlaY: 0,
+        isLoading: false
+      });
     }
   }
 }
@@ -109,6 +151,11 @@ export default function withPullToRefresh(WrappedComponent: any, action: Functio
 interface PullToRefreshState {
   lastTouch: any
   detlaY: number,
-  marginTop: number,
   isLoading: boolean
+}
+
+interface PullToRefreshProps {
+  size?: number,
+  pullDownDistance?: number,
+  loadingDistance?: number
 }

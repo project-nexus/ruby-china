@@ -18,6 +18,10 @@ class PubSub {
     delete this._subscribers[key];
   }
 
+  unsubscribeAll() {
+    this._subscribers = {};
+  }
+
   publish(args: any) {
     for (const key in this._subscribers) {
       try {
