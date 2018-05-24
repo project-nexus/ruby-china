@@ -53,10 +53,10 @@ export default function withPullToRefresh(WrappedComponent: any, action: Functio
 
     handleMouseMove(e: any) {
       if (window.pageYOffset === 0 && this.state.lastTouch)  {
+        this.enterDragMode();
         const touch = e;
         const detlaY = touch.screenY - this.state.lastTouch.screenY;
         if (detlaY > 0) {
-          document.body.style.overflow = 'hidden';
           this.setState({detlaY});
         }
       }
@@ -67,11 +67,11 @@ export default function withPullToRefresh(WrappedComponent: any, action: Functio
         const { dispatch } = this.props as any;
         this.setState({isLoading: true});
         dispatch(action()).then(() => {
-          this.resetOverflow();
+          this.exitDragMode();
           this.resetState();
         }).catch((e: any) => {
           console.log(e);
-          this.resetOverflow();
+          this.exitDragMode();
           this.resetState();
         })
       } else {
@@ -91,7 +91,7 @@ export default function withPullToRefresh(WrappedComponent: any, action: Functio
     }
 
     componentWillUnmount() {
-      this.resetOverflow();
+      this.exitDragMode();
       const options: any = {passive: false, capture: false};
       document.removeEventListener('touchstart', this.handleTouchStart);
       document.removeEventListener('touchmove', this.handleTouchMove, options);
@@ -102,15 +102,14 @@ export default function withPullToRefresh(WrappedComponent: any, action: Functio
     }
 
     render() {
-
-      const { detlaY, isLoading } = this.state;
+      const { detlaY, isLoading, isDrag } = this.state;
       const pullDownDistance = detlaY > this.getPullDownDistance() ? this.getPullDownDistance() : detlaY;
       const marginTop = pullDownDistance - this.getSpinnerSize();
       const step = 1.0/(this.getPullDownDistance()/1.1);
 
       return (
         <div className="pullToRefreshContainer">
-          <div className="pullToRefreshLoading" style={{marginTop: isLoading ? `${marginTop-30}px` : `${marginTop}px`}}>
+          <div className="pullToRefreshLoading" style={{marginTop: isLoading ? `${marginTop-30}px` : `${marginTop}px`, display: isDrag ? 'flex' : 'none'}}>
             <div className="spinner-container">
               { 
                 this.state.isLoading ? 
@@ -123,6 +122,16 @@ export default function withPullToRefresh(WrappedComponent: any, action: Functio
           <WrappedComponent {...this.props} />
         </div>
       );
+    }
+
+    private enterDragMode() {
+      this.setState({isDrag: true});
+      document.body.style.overflow = 'hidden';
+    }
+
+    private exitDragMode() {
+      this.setState({isDrag: false});
+      document.body.style.overflow = 'visible';
     }
 
     private getSpinnerSize(): number {
