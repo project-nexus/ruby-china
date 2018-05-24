@@ -21,10 +21,7 @@ export default class SpinnerCircle extends React.Component<any, any> {
             <circle className="path"
                     fill="none"
                     strokeWidth="6"
-                    strokeLinecap="round"
-                    cx="33" cy="33" r="30"
-                    style={{stroke: this.props.color ? this.props.color : 'white'}}
-            />
+                    cx="33" cy="33" r="30" />
           </svg>
         </div>
       </div>

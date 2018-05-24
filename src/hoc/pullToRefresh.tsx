@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as _ from 'lodash';
 import LoadingCircle from '../common/components/shared/spinner-circle';
 import './pull-to-refresh.css';
 
@@ -27,7 +28,8 @@ export default function withPullToRefresh(WrappedComponent: any, action: Functio
       this.state = {
         lastTouch: null,
         detlaY: 0,  
-        isLoading: false
+        isLoading: true,
+        isDrag: false
       }
     }
 
@@ -103,20 +105,17 @@ export default function withPullToRefresh(WrappedComponent: any, action: Functio
 
       const { detlaY, isLoading } = this.state;
       const pullDownDistance = detlaY > this.getPullDownDistance() ? this.getPullDownDistance() : detlaY;
-      console.log("pullDownDistance: ", pullDownDistance);
       const marginTop = pullDownDistance - this.getSpinnerSize();
-
-      const step = 1.0/(this.getPullDownDistance()/2);
-      console.log("opacity: ", pullDownDistance*step);
-
+      const step = 1.0/(this.getPullDownDistance()/1.1);
 
       return (
         <div className="pullToRefreshContainer">
           <div className="pullToRefreshLoading" style={{marginTop: isLoading ? `${marginTop-30}px` : `${marginTop}px`}}>
             <div className="spinner-container">
-              { this.state.isLoading ? 
-                <LoadingCircle width={30} /> :
-               <i className='icon ion-md-refresh' style={{transform: `rotate(${marginTop*6}deg)`, opacity: pullDownDistance*step, color: '#0336FF'}}></i>
+              { 
+                this.state.isLoading ? 
+                <LoadingCircle width={20} /> :
+                <i className='icon ion-md-refresh' style={{transform: `rotate(${marginTop*6}deg)`, opacity: pullDownDistance*step, color: '#1976D2'}}></i>
               }
             </div>
           </div>
@@ -135,7 +134,7 @@ export default function withPullToRefresh(WrappedComponent: any, action: Functio
     }
 
     private resetOverflow() {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = 'visible';
     }
 
     private resetState() {
@@ -151,7 +150,8 @@ export default function withPullToRefresh(WrappedComponent: any, action: Functio
 interface PullToRefreshState {
   lastTouch: any
   detlaY: number,
-  isLoading: boolean
+  isLoading: boolean,
+  isDrag: boolean
 }
 
 interface PullToRefreshProps {
