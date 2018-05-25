@@ -10,6 +10,8 @@ export default interface AbstractAdapter {
 
   getReplies(): any;
 
+  getCurrentUser(...args: any[]): any;
+
   getUser(): any;
 
   getUsers(): any;

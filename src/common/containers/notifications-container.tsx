@@ -6,6 +6,7 @@ import { detectScrollEnd } from '../lib/scroll';
 import { fetchNotifications } from '../actions/notification';
 import NotificationList from '../components/notification-container/notification-list';
 import SpinnerCircle from '../components/shared/spinner-circle';
+import withAuthenticatedRoute from '../../hoc/authenticatedRoute';
 
 class NotificationsContainer extends React.Component<any, any> {
 
@@ -83,4 +84,4 @@ function mapStateToProps(state: any) {
   }
 }
 
-export default connect(mapStateToProps)(NotificationsContainer);
+export default connect(mapStateToProps)(withAuthenticatedRoute(NotificationsContainer, '/login'));

@@ -1,5 +1,5 @@
 import axios, {AxiosInstance} from 'axios';
-import config from '../../config.json';
+import config from '../config.json';
 import Token from '../models/Token';
 import AbstractAdapter from './AbstractAdapter';
 import * as _ from 'lodash';
@@ -15,22 +15,56 @@ class RubyChinaAdapter implements AbstractAdapter {
     });
   }
 
-  getToken: (username: string, password: string) => Promise<Token> = _.throttle((username: string, password: string) => {
-    if (this._currentToken) {
-      if (this._currentToken.expiresAt < Date.now()) {
-        return this._refreshToken(this._currentToken.refreshToken).then((token: Token) => {
-          this._currentToken = token;
-          return token;
-        }); 
-      } else {
-        return Promise.resolve(this._currentToken);
+  getTopics() {
+  }
+
+  getTopic() {
+  }
+
+  async getCurrentUser() {
+    try {
+      const token = await this._requireAuthentication();
+      const res = await this._client.get('/api/v3/users/me', {headers: {'Authorization': `Bearer ${(token as Token).accessToken}`}});
+      console.log(res.data);
+    } catch (e) {
+      console.log(e);
+      throw e;
+    }
+  }
+
+  getUsers() {
+
+  }
+
+  getUser() {
+  }
+
+  getReplies() {
+
+  }
+
+  getNotifications() {
+
+  }
+
+  getToken: (username?: string, password?: string) => Promise<Token> = _.throttle(async (username: string, password: string) => {
+
+    debugger;
+
+    // no current token, request a new token
+    if (typeof this._currentToken === 'undefined') {
+      if (username && password) {
+        this._currentToken = await this._requestToken(username, password);
       }
+      throw 'username and password is required';
     }
 
-    return this._requestToken(username, password).then((token: Token) => {
-      this._currentToken = token;
-      return token;
-    });
+    // current token expires, refresh the token
+    if (this._currentToken && this._currentToken.expiresAt < Date.now()) {
+      this._currentToken = await this._refreshToken(this._currentToken.refreshToken);
+    }
+
+    return this._currentToken;
   }, 200);
 
   private _requestToken(username: string, password: string): Promise<Token> {
@@ -55,4 +89,29 @@ class RubyChinaAdapter implements AbstractAdapter {
       return <Token>{};
     })
   }
+
+  private _checkExpire() {
+  }
+
+  // should store in cookie according to: https://stormpath.com/blog/where-to-store-your-jwts-cookies-vs-html5-web-storage
+  private _getCurrentToken() {
+  }
+
+  private _setCurrentToken() {
+  }
+
+  private async _requireAuthentication() {
+    if (this._currentToken) {
+      if (this._currentToken.expiresAt < Date.now()) {
+        return await this._refreshToken(this._currentToken.refreshToken);
+      } else {
+        return this._currentToken;
+      }
+    }
+    throw 'require login';
+  }
 }
+
+const adapter = new RubyChinaAdapter();
+
+export default adapter;
