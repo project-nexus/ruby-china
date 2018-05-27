@@ -1,5 +1,5 @@
 import axios, {AxiosInstance} from 'axios';
-import config from '../config.json';
+import config from '../config';
 import Token from '../models/Token';
 import AbstractAdapter from './AbstractAdapter';
 import * as _ from 'lodash';
@@ -11,7 +11,7 @@ class RubyChinaAdapter implements AbstractAdapter {
 
   constructor() {
     this._client = axios.create({
-      baseURL: 'https://ruby-china.org/'
+      // baseURL: 'https://ruby-china.org/'
     });
   }
 
@@ -48,15 +48,13 @@ class RubyChinaAdapter implements AbstractAdapter {
   }
 
   getToken: (username?: string, password?: string) => Promise<Token> = _.throttle(async (username: string, password: string) => {
-
-    debugger;
-
     // no current token, request a new token
     if (typeof this._currentToken === 'undefined') {
-      if (username && password) {
-        this._currentToken = await this._requestToken(username, password);
+      if (typeof username === 'undefined' || typeof password === 'undefined') {
+        throw 'username and password is required';
       }
-      throw 'username and password is required';
+
+      this._currentToken = await this._requestToken(username, password);
     }
 
     // current token expires, refresh the token
@@ -68,26 +66,20 @@ class RubyChinaAdapter implements AbstractAdapter {
   }, 200);
 
   private _requestToken(username: string, password: string): Promise<Token> {
-    return this._client.post('/auth/token', {
+    return this._client.post('/oauth/token', {
       grant_type: "password",
-      client_id: config.RubyChina.client_id,
-      client_secret: config.RubyChina.client_secret,
       username,
       password,
-    }).then((data: any) => {
-      return <Token>{};
-    })
+    }).then(this._buildToken);
   }
 
   private _refreshToken(token: string): Promise<Token> {
-    return this._client.post('/auth/token', {
+    return this._client.post('/oauth/token', {
       grant_type: "refresh_token",
-      client_id: config.RubyChina.client_id,
-      client_secret: config.RubyChina.client_secret,
+      // client_id: config.RubyChina.client_id,
+      // client_secret: config.RubyChina.client_secret,
       refresh_token: token
-    }).then((data: any) => {
-      return <Token>{};
-    })
+    }).then(this._buildToken);
   }
 
   private _checkExpire() {
@@ -109,6 +101,15 @@ class RubyChinaAdapter implements AbstractAdapter {
       }
     }
     throw 'require login';
+  }
+
+  private _buildToken(res: any): Token {
+    const data = res.data;
+    return <Token>{
+      accessToken: data.access_token,
+      refreshToken: data.refresh_token,
+      expiresAt: data.created_at + data.expires_in
+    }
   }
 }
 

@@ -1,20 +1,17 @@
 import * as React from 'react';
-
 import { fetchAccessToken } from '../../actions/application';
 import Items from '../../constants/items';
 import SpinnerCircle from '../shared/spinner-circle';
 import './login.css';
+import adapter from '../../../adapters/RubyChinaAdapter';
 
-// component 保存着自己的 state, 例如 登录加载, 登录错误
-// 好处就是不会污染全局的 state, 不用 state 的清理
-// 不增加全局 state 的复杂度
 export default class Login extends React.Component<any, any> {
 
   private password: string;
   private username: string;
 
-  constructor() {
-    super({});
+  constructor(props: any) {
+    super(props);
     this.state = {
       isSubmitting: false,
       error: "",
@@ -23,28 +20,17 @@ export default class Login extends React.Component<any, any> {
     };
   }
 
-  handleSubmit() {
+  async handleSubmit() {
+    const {isSubmitting} = this.state;
     if (this.state.isSubmitting === false && this.validateParams(this.username || "", this.password || ""))  {
       const { dispatch } = this.props;
-      this.setState({ isSubmitting: true });
-      dispatch(fetchAccessToken(this.username, this.password))
-        .then((res: any) => {
-
-          this.password = "";
-
-          let state: any = { isSubmitting: false };
-
-          if (res && res.error) {
-            state.error = res.error;
-          }
-
-          this.setState(state);
-        });
+      this.setState({isSubmitting: true});
+      await adapter.getToken(this.username, this.password);
+      this.setState({isSubmitting: false});
     }
   }
 
   validateParams(username: any, password: any) {
-
     let state = { usernameError: "", passwordError: "" };
 
     if (username.length === 0) {
@@ -60,7 +46,6 @@ export default class Login extends React.Component<any, any> {
   }
 
   handleInput(type: any, e: any) {
-
     switch (type) {
       case Items.USERNAME:
         this.username = e.target.value;
@@ -74,7 +59,6 @@ export default class Login extends React.Component<any, any> {
   }
 
   render() {
-
     return (
       <div className="loginContainer">
         <h1 className="hero">Ruby China</h1>
@@ -93,7 +77,7 @@ export default class Login extends React.Component<any, any> {
         <button className="loginButton" onClick={this.handleSubmit.bind(this)}>
           {
             this.state.isSubmitting ?
-              <SpinnerCircle width={26} /> :
+              <SpinnerCircle width={20} /> :
               "登录"
           }
         </button>
