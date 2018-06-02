@@ -33,18 +33,15 @@ class RubyChinaAdapter implements AbstractAdapter {
   }
 
   getUsers() {
-
   }
 
   getUser() {
   }
 
   getReplies() {
-
   }
 
   getNotifications() {
-
   }
 
   getToken: (username?: string, password?: string) => void = _.throttle(async (username: string, password: string) => {

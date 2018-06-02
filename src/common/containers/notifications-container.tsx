@@ -29,12 +29,9 @@ class NotificationsContainer extends React.Component<any, any> {
 
     window.scrollTo(0, 0);
     this.setState({ isLoading: true });
-
-    // authenticatedAction(dispatch, () => {
-    //   dispatch(fetchNotifications()).then(() => {
-    //     this.setState({ isLoading: false });
-    //   });
-    // });
+    dispatch(fetchNotifications()).then(() => {
+      this.setState({ isLoading: false });
+    });
   }
 
   componentWillUnmount() {
@@ -43,19 +40,12 @@ class NotificationsContainer extends React.Component<any, any> {
   }
 
   loadMoreNotifications() {
-
     if (detectScrollEnd() && this.state.isLoadingMore === false) {
-
       const { notification, dispatch } = this.props;
-
-      console.log(notification);
-
       this.setState({ isLoadingMore: true });
-      // authenticatedAction(dispatch, () => {
-      //   dispatch(fetchNotifications(notification.items.length)).then(() => {
-      //     this.setState({ isLoadingMore: false });
-      //   });
-      // });
+      dispatch(fetchNotifications(notification.items.length)).then(() => {
+        this.setState({ isLoadingMore: false });
+      });
     }
   }
 

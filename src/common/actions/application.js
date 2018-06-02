@@ -98,3 +98,13 @@ export function refreshAccessToken() {
 }
 
 
+export function appStartLoading() {
+  return {
+    type: types.APP_START_LOADING
+  }
+}
+export function appStopLoading() {
+  return {
+    type: types.APP_STOP_LOADING
+  }
+}

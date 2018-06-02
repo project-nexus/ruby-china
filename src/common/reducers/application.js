@@ -5,7 +5,8 @@ import * as actionTypes from '../constants/action-types';
 const initialState = {
   position: 0,
   token: '',
-  currentUser: {}
+  currentUser: {},
+  isLoading: false
 };
 
 export default function applicationReducer(state = initialState, action) {
@@ -20,6 +21,17 @@ export default function applicationReducer(state = initialState, action) {
       return Object.assign({}, state, {
         currentUser: action.user
       });
+
+    case actionTypes.APP_START_LOADING:
+      return Object.assign({}, state, {
+        isLoading: true
+      });
+
+    case actionTypes.APP_STOP_LOADING:
+      return Object.assign({}, state, {
+        isLoading: false
+      });
+ 
     default:
       return state;
   }

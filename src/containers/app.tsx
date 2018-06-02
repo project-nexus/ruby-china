@@ -13,27 +13,46 @@ import LoginContainer from '../common/containers/login-container';
 import NotificationsContainer from '../common/containers/notifications-container';
 import TestContainer from './Topics';
 import withAuthenticatedRoute from '../hoc/authenticatedRoute';
+import GlobalLoading from '../components/GlobalLoading';
 import '../assets/global.css';
 
 const AuthenticatePath = '/login';
 
-export default (props: any) => (
-  <Router>
-    <div className="container">
-      <div className="wrapper">
-        <NavigationBar {...props} />
-        {props.children}
+class App extends React.PureComponent {
 
-        <Switch>
-          <Route exact path="/" component={TopicsContainer} />
-          <Route exact path="/me" component={withAuthenticatedRoute(ProfileContainer, AuthenticatePath)} />
-          <Route exact path="/notifications" component={NotificationsContainer} />
-          <Route exact path="/login" component={LoginContainer} />
-          <Route exact path="/topics/:topicId" component={TopicContainer} />
-          <Route exact path="/test" component={TestContainer} />
-          <Route exact path="/:username" component={ProfileContainer} />
-        </Switch>
-      </div>
-    </div>
-  </Router>
-)
+  componentDidMount() {
+  }
+
+  render() {
+    return (
+      <Router>
+        <div className="container">
+          <div className="wrapper">
+
+            <NavigationBar {...this.props} />
+            {this.props.children}
+
+            <Switch>
+              <Route exact path="/" component={TopicsContainer} />
+              <Route exact path="/me" component={withAuthenticatedRoute(ProfileContainer, AuthenticatePath)} />
+              <Route exact path="/notifications" component={NotificationsContainer} />
+              <Route exact path="/login" component={LoginContainer} />
+              <Route exact path="/topics/:topicId" component={TopicContainer} />
+              <Route exact path="/test" component={TestContainer} />
+              <Route exact path="/:username" component={ProfileContainer} />
+            </Switch>
+
+            <GlobalLoading />
+          </div>
+        </div>
+      </Router>
+    )
+  }
+}
+
+function mapStateToProps(state: any) {
+  return {
+  }
+}
+
+export default connect(mapStateToProps)(App);

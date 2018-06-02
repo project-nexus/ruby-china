@@ -15,7 +15,9 @@ function receiveNotifications(entities, notifications) {
 
 export function fetchNotifications(offset, limit, type) {
   return (dispatch) => {
-    return fetch(address.notifications(offset, limit, type))
+    return fetch(address.notifications(offset, limit, type), {
+      credentials: "same-origin"
+    })
       .then(res => res.json())
       .then(data => {
         const notifications = data.notifications;

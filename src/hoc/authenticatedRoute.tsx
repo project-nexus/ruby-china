@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Redirect } from 'react-router'
 import adapter from '../adapters/RubyChinaAdapter';
+import {appStartLoading, appStopLoading} from '../common/actions/application'
 
 export default function withAuthenticatedRoute(WrappedComponent: any, authenticatePath: string) {
   return class extends React.PureComponent<any, any> {
@@ -11,14 +12,13 @@ export default function withAuthenticatedRoute(WrappedComponent: any, authentica
     };
 
     async componentDidMount() {
+      const {dispatch} = this.props;
+      dispatch(appStartLoading())
       try {
         await adapter.getToken();
       } catch (e) {
         console.log(e);
-        this.setState({redirect: true});
-      } finally {
-        this.setState({isLoading: false});
-      }
+      }     
     }
 
     render() {

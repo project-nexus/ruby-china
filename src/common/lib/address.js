@@ -1,7 +1,7 @@
 'use strict';
 
 import { getToken } from './util';
-const BASE_URL = 'https://ruby-china.org/api/v3';
+const BASE_URL = '/api/v3';
 
 function addressFactory(url, params) {
   let { accessToken } = getToken();
@@ -83,10 +83,6 @@ const address = {
   topicUnfollow: (id) => {
     return addressFactory(`topics/${id}/unfollow`)
   },
-
-
-
-
 };
 
 export default address;
