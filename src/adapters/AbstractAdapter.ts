@@ -16,5 +16,5 @@ export default interface AbstractAdapter {
 
   getUsers(): any;
 
-  getToken(...args: any[]): Promise<Token>;
+  getToken(...args: any[]): void;
 }

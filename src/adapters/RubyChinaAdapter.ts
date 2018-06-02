@@ -47,22 +47,23 @@ class RubyChinaAdapter implements AbstractAdapter {
 
   }
 
-  getToken: (username?: string, password?: string) => Promise<Token> = _.throttle(async (username: string, password: string) => {
+  getToken: (username?: string, password?: string) => void = _.throttle(async (username: string, password: string) => {
     // no current token, request a new token
     if (typeof this._currentToken === 'undefined') {
       if (typeof username === 'undefined' || typeof password === 'undefined') {
         throw 'username and password is required';
       }
-
       this._currentToken = await this._requestToken(username, password);
+      return
     }
 
     // current token expires, refresh the token
     if (this._currentToken && this._currentToken.expiresAt < Date.now()) {
       this._currentToken = await this._refreshToken(this._currentToken.refreshToken);
+      return
     }
 
-    return this._currentToken;
+    return
   }, 200);
 
   private _requestToken(username: string, password: string): Promise<Token> {

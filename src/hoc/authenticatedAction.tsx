@@ -2,7 +2,8 @@ import * as React from 'react';
 import { Redirect } from 'react-router'
 import adapter from '../adapters/RubyChinaAdapter';
 
-export default function withAuthenticatedRoute(WrappedComponent: any, authenticatePath: string, authenticateActions: string[]) {
+// this hoc inject authenticatedAction action to props 
+export default function withAuthenticatedAction(WrappedComponent: any, authenticatePath: string, authenticateActions: string[], redirect?: boolean) {
   return class extends React.PureComponent<any, any> {
 
     // state = {
@@ -28,5 +29,6 @@ export default function withAuthenticatedRoute(WrappedComponent: any, authentica
     //   }
     //   return <WrappedComponent {...this.props} />;
     // }
+
   }
 }

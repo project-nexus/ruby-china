@@ -1,3 +1,4 @@
+import {fetchPaginatedRes} from './ResActionCreator'
 
 const pagination = {
 }
